@@ -14,6 +14,11 @@ const router = createRouter({
           name: 'Home',
           component: () => import('@/views/HomePage.vue')
         },
+        {
+          path: '/add',
+          name: 'ADD',
+          component: () => import('@/views/ShopViews/AddPage.vue')
+        },
 
         // Auth
         {

@@ -2,7 +2,11 @@
     <div class="flex justify-center">
         <div
             class="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-
+            <div v-if="alert"
+                class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                role="alert">
+                <span class="font-medium">{{ alert }}</span>
+            </div>
             <form @submit.prevent="onSubmit">
                 <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">
                     ข้อมูลร้านค้า</h5>
@@ -88,7 +92,7 @@
                 </div>
                 <button type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    สมัคร</button>
+                    บันทึก</button>
             </form>
 
 
@@ -122,7 +126,7 @@ export default {
             username: "",
             password: "",
             cf_password: "",
-            err: "",
+            alert: "",
 
             ampAll: getAmphure(),
             tamAll: [{
@@ -148,6 +152,9 @@ export default {
             const sTAM = document.querySelector('#tam') as HTMLSelectElement
             this.selected_amp = sAMP.options[sAMP.selectedIndex].text
             this.selected_tam = sTAM.options[sTAM.selectedIndex].text
+
+            console.log(this.users_commu_id + ' ' + this.commu_id)
+
             await axios.put(`http://localhost:3001/api/commu/` + this.commu_id, {
                 name: this.shop_name,
                 address: this.address,
@@ -157,7 +164,6 @@ export default {
                 tam: this.selected_tam,
             })
             await axios.put(`http://localhost:3001/api/auth/users-community/` + this.users_commu_id, {
-                users_commu_id: this.users_commu_id,
                 full_name: this.full_name,
                 password: this.password,
             })
@@ -177,7 +183,8 @@ export default {
                 users_commu_id: this.users_commu_id,
             }
             localStorage.setItem('user', JSON.stringify(changeData))
-            console.log(this.$router.go(0))
+            this.alert = "อัปเดตข้อมูลสำเร็จ"
+            scroll(0, 0)
         }
     },
     mounted() {
