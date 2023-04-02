@@ -16,8 +16,13 @@ const router = createRouter({
         },
         {
           path: '/add',
-          name: 'ADD',
+          name: 'Add',
           component: () => import('@/views/ShopViews/AddPage.vue')
+        },
+        {
+          path: '/edit/:id',
+          name: 'Edit',
+          component: () => import('@/views/ShopViews/EditPage.vue')
         },
 
         // Auth

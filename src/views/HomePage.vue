@@ -1,14 +1,24 @@
+<style>
+img {
+    width: 100%;
+    object-fit: cover;
+}
+</style>
+
 <template>
     <div class="container mx-auto">
         <h1>Hello {{ userStore.getUser }}</h1>
         <div class="products grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            <div v-for="({ name, product_image }, index) in products" :key="index">
-                <a href="#"
-                    class="block max-w-xs p-6 h-80 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <div class="grid justify-items-center">
-                        <img class="rounded-t-lg object-center w-full h-48" :src="product_image" alt="" />
+            <div v-for="({ name, image_1, quantity, product_id }, index) in products" :key="index">
+                <a :href="`/edit/${product_id}`"
+                    class="block max-w-xs p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    <img class="rounded w-full h-48" :src="image_1" alt="" />
+                    <div>
                         <p class="mt-6 text-2xl text-gray-700 dark:text-gray-400">
                             {{ name }}
+                        </p>
+                        <p class="text-lg text-gray-700 dark:text-gray-400">
+                            จำนวนสินค้า: {{ quantity }}
                         </p>
                     </div>
                 </a>

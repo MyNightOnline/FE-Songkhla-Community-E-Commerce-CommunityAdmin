@@ -29,24 +29,9 @@ onMounted(() => {
     initTabs()
     initTooltips()
 })
-</script>
 
-<script lang="ts">
-
-export default {
-    data() {
-        return {
-
-        }
-    },
-    methods: {
-        logout() {
-            userStore.signOut()
-        },
-    },
-    mounted() {
-
-    }
+const logout = () => {
+    userStore.signOut()
 }
 </script>
 
@@ -101,4 +86,3 @@ export default {
         </div>
     </nav>
 </template>
-

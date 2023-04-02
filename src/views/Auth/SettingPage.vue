@@ -189,7 +189,6 @@ export default {
     },
     mounted() {
         const data = JSON.parse(localStorage.getItem('user')!)
-        console.log(data)
         this.commu_id = data.commu_id
         this.users_commu_id = data.users_commu_id
 
