@@ -24,6 +24,21 @@ const router = createRouter({
           name: 'Edit',
           component: () => import('@/views/ShopViews/EditPage.vue')
         },
+        {
+          path: '/report',
+          name: 'Report',
+          component: () => import('@/views/ShopViews/Report.vue')
+        },
+        {
+          path: '/manage-order',
+          name: 'ManagerOrder',
+          component: () => import('@/views/ShopViews/ManageOrder.vue')
+        },
+        {
+          path: '/manage-order/:id',
+          name: 'EditManagerOrder',
+          component: () => import('@/views/ShopViews/EditManageOrder.vue')
+        },
 
         // Auth
         {

@@ -47,6 +47,9 @@
                             placeholder="จำนวนสินค้า" required>
                     </div>
                     <div>
+                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ประเภทสินค้า
+                        </label>
                         <select v-model="product.category_id" id="category_id" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="-1" selected disabled>ประเภทสินค้า</option>
@@ -80,14 +83,17 @@
                 </div>
                 <div class="space-y-6">
                     <div>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="grid grid-cols-3 gap-4">
                             <div>
+                                <h1>รูปที่ 1</h1>
                                 <img class="h-auto max-w-full rounded-lg" :src="product.image1" alt="">
                             </div>
                             <div>
+                                <h1>รูปที่ 2</h1>
                                 <img class="h-auto max-w-full rounded-lg" :src="product.image2" alt="">
                             </div>
                             <div>
+                                <h1>รูปที่ 3</h1>
                                 <img class="h-auto max-w-full rounded-lg" :src="product.image3" alt="">
                             </div>
                         </div>
@@ -95,28 +101,45 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">
                             อัพโหลดรูปภาพ
                         </label>
-                        <input @change="previewFiles(1, $event)" ref="file"
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            aria-describedby="file_input_help" id="file_input" type="file">
+                        <div class="grid grid-cols-3 gap-4">
+                            <input @change="previewFiles(1, $event)" ref="file1"
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                :class="[toggleImg1 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
+                                id="file_input1" type="file">
+                            <button v-if="toggleImg1" type="submit" @click="delPreview(1)"
+                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                ลบรูป
+                            </button>
+                        </div>
                         <br>
-                        <input @change="previewFiles(2, $event)" ref="file"
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            aria-describedby="file_input_help" id="file_input" type="file">
+                        <div class="grid grid-cols-3 gap-4">
+                            <input @change="previewFiles(2, $event)" ref="file2"
+                                class="col-span-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                :class="[toggleImg2 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
+                                id="file_input2" type="file">
+                            <button v-if="toggleImg2" type="submit" @click="delPreview(2)"
+                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                ลบรูป
+                            </button>
+                        </div>
                         <br>
-                        <input @change="previewFiles(3, $event)" ref="file"
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            aria-describedby="file_input_help" id="file_input" type="file">
+                        <div class="grid grid-cols-3 gap-4">
+                            <input @change="previewFiles(3, $event)" ref="file3"
+                                class="col-span-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                :class="[toggleImg3 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
+                                id="file_input2" type="file">
+                            <button v-if="toggleImg3" type="submit" @click="delPreview(3)"
+                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                ลบรูป
+                            </button>
+                        </div>
 
                     </div>
-                    <button v-if="false" type="submit" @click="delPreview"
-                        class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                        ลบรูป
-                    </button>
                     <button type="submit"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         อัปเดตข้อมูลสินค้า
                     </button>
-                    <button type="submit"
+                    <button type="button" @click="delProduct"
                         class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                         ลบสินค้า
                     </button>
@@ -151,9 +174,17 @@ export default {
                 category_id: '',
             },
 
+            defaultImg1: '',
+            defaultImg2: '',
+            defaultImg3: '',
+
             toggleImg1: false,
             toggleImg2: false,
             toggleImg3: false,
+
+            product_image1: "",
+            product_image2: "",
+            product_image3: "",
 
             default_categories: [
                 {
@@ -166,20 +197,20 @@ export default {
     methods: {
         async onSubmit() {
             if (this.product.otop == -1) return alert('โปรดเลือกระดับสินค้า')
-            console.log(
-                `${this.product.name}\n` +
-                `${this.product.price}\n` +
-                `${this.product.quantity}\n` +
-                `${this.product.otop}\n` +
-                `${this.product.gram}\n` +
-                `${this.product.users_commu_id}\n` +
-                `${this.product.category_id}\n`
-            )
             const formData = new FormData()
 
-            if (this.toggleImg1) formData.append('file1', this.product.image1[0])
-            if (this.toggleImg2) formData.append('file2', this.product.image2[0])
-            if (this.toggleImg3) formData.append('file3', this.product.image3[0])
+            if (this.toggleImg1) {
+                formData.append('file1', this.product_image1[0])
+                console.log('success file 1')
+            }
+            if (this.toggleImg2) {
+                formData.append('file2', this.product_image2[0])
+                console.log('success file 2')
+            }
+            if (this.toggleImg3) {
+                formData.append('file3', this.product_image3[0])
+                console.log('success file 3')
+            }
             formData.append('name', this.product.name)
             formData.append('price', this.product.price)
             formData.append('quantity', this.product.quantity)
@@ -196,19 +227,29 @@ export default {
             }
         },
         previewFiles(num: Number, event: any) {
+            // console.log(event.srcElement.className)
             var input = event.target
             if (input.files) {
                 const reader = new FileReader()
                 reader.onload = (evt: any) => {
                     if (num == 1) {
+
                         this.product.image1 = evt.target.result
                         this.toggleImg1 = true
+                        this.product_image1 = event.target.files
+
                     } else if (num == 2) {
+
                         this.product.image2 = evt.target.result
                         this.toggleImg2 = true
+                        this.product_image2 = event.target.files
+
                     } else if (num == 3) {
+
                         this.product.image3 = evt.target.result
                         this.toggleImg3 = true
+                        this.product_image3 = event.target.files
+
                     }
                 }
                 reader.readAsDataURL(input.files[0])
@@ -223,7 +264,26 @@ export default {
             // }
 
         },
-        delPreview() {
+        delPreview(num: Number) {
+            if (num == 1) {
+                (this.$refs as any).file1.value = ''
+                this.toggleImg1 = false
+                this.product.image1 = this.defaultImg1
+            } else if (num == 2) {
+                (this.$refs as any).file2.value = ''
+                this.toggleImg2 = false
+                this.product.image2 = this.defaultImg2
+            } else if (num == 3) {
+                (this.$refs as any).file3.value = ''
+                this.toggleImg3 = false
+                this.product.image3 = this.defaultImg3
+            }
+        },
+        async delProduct() {
+            if (confirm('คุณต้องการลบผลิตภัณฑ์นี้หรือไม่') == true) {
+                await axios.delete('http://localhost:3001/api/products/' + this.$route.params.id)
+                this.$router.push('/')
+            }
 
         },
     },
@@ -232,7 +292,6 @@ export default {
         this.default_categories = result_category.data
 
         const { data } = await axios.get('http://localhost:3001/api/products/' + this.$route.params.id)
-        console.log(data)
 
         this.product.name = data.name
         this.product.price = data.price
@@ -244,8 +303,18 @@ export default {
         this.product.image2 = data.image_2
         this.product.image3 = data.image_3
 
+        this.defaultImg1 = data.image_1
+        this.defaultImg2 = data.image_2
+        this.defaultImg3 = data.image_3
+
         this.product.users_commu_id = data.users_commu_id
         this.product.category_id = data.category_id
+
+        const dataUser = JSON.parse(localStorage.getItem('user')!)
+        if (data.users_commu_id != dataUser.users_commu_id) {
+            this.$router.push('/')
+            alert('คุณไม่มีสิทธิ์เข้าถึง')
+        }
     }
 }
 </script>

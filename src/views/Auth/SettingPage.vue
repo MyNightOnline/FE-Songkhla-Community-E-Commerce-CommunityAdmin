@@ -40,6 +40,8 @@
                             placeholder="X-XX-XX-XX/X-XXXX" required>
                     </div>
                     <div>
+                        <label for="amp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            อำเภอ</label>
                         <select required id="amp" @change="getTam"
                             class="bg-gray-50 overflow-auto border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>
@@ -51,6 +53,8 @@
                         </select>
                     </div>
                     <div>
+                        <label for="tam" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ตำบล</label>
                         <select required id="tam"
                             class="bg-gray-50 overflow-auto border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>--- เลือกตำบล ---</option>
