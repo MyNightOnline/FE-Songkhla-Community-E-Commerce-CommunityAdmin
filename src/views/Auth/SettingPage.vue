@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center">
+    <div class="my-10 flex justify-center">
         <div
             class="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div v-if="alert"
@@ -64,7 +64,33 @@
                         </select>
                     </div>
                 </div>
-                <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">
+
+                <div>
+                    <h3 class="flex items-center mr-4 font-semibold text-gray-900 dark:text-white">
+                        ช่องทางชำระเงิน
+                    </h3>
+                    <div class="flex items-center mr-4">
+                        <input disabled checked id="inline-disabled-checkbox" type="checkbox" value=""
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="inline-disabled-checkbox"
+                            class="ml-2 w-24 text-sm font-medium text-gray-400 dark:text-gray-500">
+                            ชำระปลายทาง
+                        </label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="inline-2-checkbox" type="checkbox" value="" :checked="!togglePrompay"
+                            @click="changeToggle"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="inline-2-checkbox"
+                            class="ml-2 w-24 text-sm font-medium text-gray-900 dark:text-gray-300">
+                            พร้อมเพย์
+                        </label>
+                        <input type="text" id="small-input" :disabled="togglePrompay" v-model="promptpay"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+                </div>
+
+                <h5 class="my-6 text-xl font-medium text-gray-900 dark:text-white">
                     ข้อมูลผู้ใช้</h5>
                 <div class="mb-6">
                     <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -122,6 +148,7 @@ export default {
             shop_name: "",
             address: "",
             mobile: "",
+            promptpay: "",
             regis_code: "",
             selected_amp: "",
             selected_tam: "",
@@ -137,6 +164,8 @@ export default {
                 id: 0,
                 nameTAM: '',
             }],
+
+            togglePrompay: true,
         }
     },
     methods: {
@@ -163,6 +192,7 @@ export default {
                 name: this.shop_name,
                 address: this.address,
                 mobile: this.mobile,
+                promptpay: this.promptpay,
                 regis_code: this.regis_code,
                 amp: this.selected_amp,
                 tam: this.selected_tam,
@@ -180,6 +210,7 @@ export default {
                 confirm_status: this.confirm_status,
                 full_name: this.full_name,
                 mobile: this.mobile,
+                promptpay: this.promptpay,
                 name: this.shop_name,
                 regis_code: this.regis_code,
                 tam: this.selected_tam,
@@ -189,7 +220,15 @@ export default {
             localStorage.setItem('user', JSON.stringify(changeData))
             this.alert = "อัปเดตข้อมูลสำเร็จ"
             scroll(0, 0)
-        }
+        },
+        changeToggle() {
+            this.togglePrompay = !this.togglePrompay
+            if (this.togglePrompay) this.promptpay = ''
+            else {
+                const data = JSON.parse(localStorage.getItem('user')!)
+                this.promptpay = data.promptpay
+            }
+        },
     },
     mounted() {
         const data = JSON.parse(localStorage.getItem('user')!)
@@ -199,6 +238,12 @@ export default {
         this.shop_name = data.name
         this.address = data.address
         this.mobile = data.mobile
+        if (data.promptpay) {
+            console.log('on')
+            this.promptpay = data.promptpay
+            this.togglePrompay = false
+        }
+
         this.regis_code = data.regis_code
         this.full_name = data.full_name
         this.username = data.username
