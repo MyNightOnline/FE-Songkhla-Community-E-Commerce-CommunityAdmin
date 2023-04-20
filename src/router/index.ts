@@ -52,10 +52,27 @@ const router = createRouter({
           component: () => import('@/views/Auth/SignUpPage.vue')
         },
         {
-          "path": "/setting",
-          "name": "Setting",
-          component: () => import('@/views/Auth/SettingPage.vue')
-        }
+          "path": "/setting/profile",
+          "name": "SettingProfile",
+          component: () => import('@/components/Auth/Setting/Default.vue'),
+          children: [
+            {
+              "path": "/setting/profile",
+              "name": "SettingProfile",
+              component: () => import('@/components/Auth/Setting/Profile.vue')
+            },
+            {
+              "path": "/setting/shop",
+              "name": "SettingShop",
+              component: () => import('@/components/Auth/Setting/Shop.vue')
+            },
+            {
+              "path": "/setting/payment",
+              "name": "SettingPayment",
+              component: () => import('@/components/Auth/Setting/Payment.vue')
+            },
+          ]
+        },
       ]
     },
   ]

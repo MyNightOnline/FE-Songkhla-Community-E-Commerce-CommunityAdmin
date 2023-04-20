@@ -19,7 +19,7 @@ export const useUserStore = defineStore("user", {
                 })
                 this.user.full_name = res.data.full_name
                 localStorage.setItem('user', JSON.stringify(res.data))
-                router.push('/')
+                location.href = '/'
             } catch (err) {
                 return 'err'
             }

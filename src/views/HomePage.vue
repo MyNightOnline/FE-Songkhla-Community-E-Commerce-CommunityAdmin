@@ -7,11 +7,10 @@ img {
 
 <template>
     <div class="container mx-auto">
-        <h1>Hello {{ userStore.getUser }}</h1>
-        <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+        <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             <div v-for="({ name, image_1, quantity, product_id, otop, price }, index) in products" :key="index">
                 <a :href="`/edit/${product_id}`"
-                    class="block max-w-xs p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    class="block ms:max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     <img class="rounded w-full h-48" :src="image_1" alt="" />
                     <div class="mb-5">
                         <p class="mt-6 text-2xl text-gray-700 dark:text-gray-400">
@@ -23,7 +22,7 @@ img {
                         <Rating :get-star="otop" />
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ price }}บาท</span>
+                        <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ price }} บาท</span>
                     </div>
                 </a>
             </div>

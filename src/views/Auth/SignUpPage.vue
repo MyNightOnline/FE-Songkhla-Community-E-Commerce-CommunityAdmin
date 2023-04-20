@@ -1,5 +1,11 @@
+<style>
+.required:after {
+    content: " *";
+    color: red;
+}
+</style>
 <template>
-    <div class="flex justify-center my-10">
+    <div class="sm:mr-64 flex justify-center my-10">
         <div
             class="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
 
@@ -8,34 +14,38 @@
                     ข้อมูลร้านค้า</h5>
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
-                        <label for="shop_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            ชื่อร้านค้า</label>
+                        <label for="shop_name"
+                            class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ชื่อกลุ่มวิสาหกิจชุมชน</label>
                         <input v-model="shop_name" type="text" id="shop_name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Shop Name" required>
                     </div>
                     <div>
-                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="address" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             ที่อยู่</label>
                         <input v-model="address" type="text" id="address"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="..." required>
                     </div>
                     <div>
-                        <label for="mobile" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            เบอร์โทร</label>
+                        <label for="mobile" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            เบอร์โทรศัพท์</label>
                         <input v-model="mobile" type="text" id="mobile" maxlength="10"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="0XX-XXX-XXXX" required>
                     </div>
                     <div>
-                        <label for="regis_code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="regis_code"
+                            class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             รหัสทะเบียน</label>
                         <input v-model="regis_code" type="tel" id="regis_code"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="X-XX-XX-XX/X-XXXX" required>
                     </div>
                     <div>
+                        <label for="amp" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            อำเภอ</label>
                         <select required id="amp" @change="getTam"
                             class="bg-gray-50 overflow-auto border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>
@@ -47,6 +57,8 @@
                         </select>
                     </div>
                     <div>
+                        <label for="ะฟท" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ตำบล</label>
                         <select required id="tam"
                             class="bg-gray-50 overflow-auto border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>--- เลือกตำบล ---</option>
@@ -60,28 +72,28 @@
                     ข้อมูลผู้ใช้</h5>
                 <div class="mb-6">
                     <label for="full_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        ชื่อเต็ม</label>
+                        ผู้มีอำนาจแทนการ</label>
                     <input v-model="full_name" type="text" id="full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="full name" required>
+                        placeholder="..." required>
                 </div>
                 <div class="mb-6">
-                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label for="username" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         ชื่อผู้ใช้</label>
                     <input v-model="username" type="text" id="username"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="username" required>
+                        placeholder="..." required>
                 </div>
                 <div class="mb-6">
                     <label for="password"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">รหัสผ่าน</label>
+                        class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">รหัสผ่าน</label>
                     <input v-model="password" type="password" id="password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="•••••••••" required>
                 </div>
                 <div class="mb-6">
                     <label for="confirm_password"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ยืนยันรหัสผ่าน</label>
+                        class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">ยืนยันรหัสผ่าน</label>
                     <input v-model="cf_password" type="password" id="confirm_password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="•••••••••" required>
