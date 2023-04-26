@@ -71,9 +71,11 @@ export default {
                         </svg>
                     </button>
                     <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
-                        <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
+                        <img src="/src/assets/businessman.png" class="h-8 mr-3" alt="FlowBite Logo" />
                         <span
-                            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+                            class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+                            ระบบจัดการซื้อขายผลิตภัณฑ์กลุ่มวิสาหกิจชุมชนในจังหวัดสงขลา
+                        </span>
                     </a>
                 </div>
                 <div v-if="!userStore.user.full_name">

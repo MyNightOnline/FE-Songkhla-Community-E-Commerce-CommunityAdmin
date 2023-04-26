@@ -107,11 +107,11 @@ export default {
 </script>
 
 <template>
-    <div class="max-w-5xl container mx-auto mt-12">
+    <div class="container mx-auto mt-12">
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent"
                 role="tablist">
-                <li v-for="{ name, id, target }, index in tabs" class="mr-2" role="presentation">
+                <li v-for="{ name, id, target }, index in tabs" :key="index" class="mr-2" role="presentation">
                     <button class="inline-block p-4 border-b-2 rounded-t-lg" :id="id" :data-tabs-target="`#${target}`"
                         type="button" role="tab" :aria-controls="target" aria-selected="false">
                         {{ name }} <strong style="color:red">{{ useFun(index) }}</strong>
@@ -120,7 +120,7 @@ export default {
             </ul>
         </div>
         <div id="myTabContent">
-            <div v-for="({ name, id, target, text }, index) in tabs" :id="target" role="tabpanel" :aria-labelledby="id">
+            <div v-for="({ id, target }, index) in tabs" :key="index" :id="target" role="tabpanel" :aria-labelledby="id">
 
                 <Table v-if="index == 0" :get-color-status="getColorStatus" :get-status="getStatus" :title="title"
                     :orders="orders" />
