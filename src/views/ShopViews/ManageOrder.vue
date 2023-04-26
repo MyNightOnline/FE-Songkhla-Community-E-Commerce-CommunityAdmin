@@ -30,7 +30,7 @@ export default {
                 order_id: null,
                 full_name: null,
                 total: null,
-                date: null,
+                date: '',
                 order_status: 0,
             }],
             title: [
@@ -89,11 +89,20 @@ export default {
 
         ordersData.map((order: any) => {
             if (order.users_commu_id == data.users_commu_id) {
+                const date = order.date
+                const date2 = new Date(date)
+                const formattedDate = date2.toLocaleDateString("en-GB", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit"
+                })
+                const dateParts = formattedDate.split("/")
+                const formattedDate2 = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
                 this.orders.push({
                     order_id: order.order_id,
                     full_name: order.full_name,
                     total: order.total,
-                    date: order.date,
+                    date: formattedDate2,
                     order_status: order.order_status
                 })
             }

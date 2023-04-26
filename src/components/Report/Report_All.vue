@@ -46,7 +46,7 @@ export default {
                 { category_id: 'One', name: 'A' },
             ],
             // Level
-            levelSelected: '0',
+            levelSelected: '-1',
             dataEmty: false
         }
     },
@@ -106,7 +106,7 @@ export default {
             this.checkDataEmty()
         },
         levelSelect() {
-            if (this.levelSelected == "0") {
+            if (this.levelSelected == "-1") {
                 this.products = this.defaultProducts
             } else {
                 this.products = this.defaultProducts.filter(product => product.otop.toString() == this.levelSelected)
@@ -161,7 +161,7 @@ export default {
                 <label for="underline_select2" class="sr-only">Underline select</label>
                 <select id="underline_select2" v-model="levelSelected" @change="levelSelect"
                     class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option value="0">ระดับทั้งหมด</option>
+                    <option value="-1">ระดับทั้งหมด</option>
                     <option v-for="({ name, value }, index) in dropdownMenu" :key="index" :value="value">
                         {{ name }}
                     </option>
