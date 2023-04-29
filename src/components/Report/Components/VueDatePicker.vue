@@ -32,3 +32,12 @@ const handleDate = (modelData: any) => {
     return `${day1}/${month1}/${year1} - ${day2}/${month2}/${year2}`
 }
 </script>
+
+<script lang="ts">
+// Your component logic here
+
+export default {
+    name: "VueDatePicker",
+    // Other component options here
+}
+</script>

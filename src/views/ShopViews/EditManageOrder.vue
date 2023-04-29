@@ -11,7 +11,7 @@
                 <!-- Modal toggle -->
                 <div class="flex justify-between">
                     <h5 class="mb-5 text-base lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        รายละเอียดคำสั่งซื้อ #{{ this.$route.params.id }}
+                        รายละเอียดคำสั่งซื้อ #{{ $route.params.id }}
                     </h5>
                     <h5 class="text-base lg:text-lg">
                         สถานะ <span
@@ -85,7 +85,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div class="flex items-end">
-                        <Modal v-if="urlSlip && orderStatus != 0" :urlSlip="urlSlip" :order-id="this.$route.params.id" />
+                        <Modal v-if="urlSlip && orderStatus != 0" :urlSlip="urlSlip" :orderId="$route.params.id" />
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
                         รายละเอียดผู้ซื้อ
                     </h5>
                     <h5 class="mb-5 text-base lg:text-lg font-medium tracking-tight text-gray-900 dark:text-white">
-                        วันที่สั่งซื้อ {{ customer.date }}
+                        วันที่สั่งซื้อ {{ dateFormat(customer.date) }}
                     </h5>
                 </div>
 
@@ -138,6 +138,7 @@
 import axios from 'axios'
 
 import Modal from '@/components/EditManageOrder.vue/Modal.vue'
+import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
 
 interface Detail {
     product_id: number,
@@ -195,9 +196,7 @@ export default {
                 { 2: 'เตรียมผลิตภัณฑ์' },
                 { 3: 'จัดส่งผลิตภัณฑ์' },
             ],
-
             orderStatus: 0,
-
             tracking: '',
         }
     },
@@ -216,7 +215,6 @@ export default {
             else if (status_id == 3) return 'bg-green-100 text-green-800'
         },
         async submitStatus(num: number) {
-
             if (num == 2) {
                 if (this.tracking.length < 10) {
                     return alert('โปรดกรอกหมายเลขพัสดุให้ครบ')
@@ -234,8 +232,12 @@ export default {
                 })
                 if (result) return this.$router.go(0)
             }
-
         },
+        dateFormat(oldDate: any) {
+            const formatter = new BuddhistDateFormatter(oldDate)
+            const formattedDate = formatter.format()
+            return formattedDate
+        }
     },
 
     async mounted() {

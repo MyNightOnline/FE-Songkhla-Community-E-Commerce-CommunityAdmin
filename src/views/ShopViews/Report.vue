@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Report_All from '@/components/Report/Report_All.vue'
 import Report_Order from '@/components/Report/Report_Order.vue'
-import Report_Paid from '@/components/Report/Report_Paid.vue'
+
 import { onMounted } from 'vue'
 import {
     initTabs,
@@ -18,7 +18,15 @@ const tabs = [
 </script>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import Report_Paid from '@/components/Report/Report_Paid.vue'
+export default defineComponent({
+    components: {
+        Report_Paid
+    }
+})
 </script>
+
 
 <template>
     <div class="container mx-auto mt-12">

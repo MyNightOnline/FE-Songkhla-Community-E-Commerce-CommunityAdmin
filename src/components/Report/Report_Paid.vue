@@ -48,6 +48,6 @@
   </div>
 </template>
 
-<script setup>
-import VueDatePicker from './Components/VueDatePicker.vue'
+<script setup lang="ts">
+import VueDatePicker from "./Components/VueDatePicker.vue"
 </script>
