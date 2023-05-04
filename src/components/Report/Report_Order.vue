@@ -95,6 +95,7 @@ import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
 
 export default defineComponent({
     setup() {
+        const dataUser = JSON.parse(localStorage.getItem('user')!)
         let selected1 = ref('-1')
         const option1 = [
             { value: '-1', title: 'ทั้งหมด' },
@@ -117,7 +118,6 @@ export default defineComponent({
         const errorMessage = ref('')
         let lengthOrders = ref(0)
         let search = ref('')
-
         const loadOrders = async () => {
 
             try {
@@ -127,12 +127,10 @@ export default defineComponent({
                 }
                 const data = await response.json()
                 orders.value = data
-
-                orders.value = orders.value.map((order: Order) => {
+                orders.value = orders.value.filter((order: Order) => {
                     order.date = dateFormat(order.date)
-                    return order
+                    return order.users_commu_id == dataUser.users_commu_id
                 })
-
                 defaultOrders.value = data
                 lengthOrders.value = orders.value.length
             } catch (error: any) {

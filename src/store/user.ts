@@ -30,6 +30,7 @@ export const useUserStore = defineStore("user", {
             try {
                 const res = await axios.post('http://localhost:3001/api/auth/users-community', data)
                 router.push('/login')
+                return res
             } catch (err) {
                 return alert('err')
             }

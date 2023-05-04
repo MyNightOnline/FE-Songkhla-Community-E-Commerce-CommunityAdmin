@@ -35,12 +35,6 @@ const logout = () => {
     userStore.signOut()
 }
 
-const menus = [
-    { name: 'หน้าแรก', to: '/' },
-    { name: 'จัดการคำสั่งซื้อ', to: '/manage-order' },
-    { name: 'รายงาน', to: '/report' },
-]
-
 </script>
 
 <script lang="ts">
@@ -72,9 +66,8 @@ export default {
                     </button>
                     <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
                         <img src="/src/assets/businessman.png" class="h-8 mr-3" alt="FlowBite Logo" />
-                        <span
-                            class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
-                            ระบบจัดการซื้อขายผลิตภัณฑ์กลุ่มวิสาหกิจชุมชนในจังหวัดสงขลา
+                        <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+                            E-Commerce SongKhla
                         </span>
                     </a>
                 </div>

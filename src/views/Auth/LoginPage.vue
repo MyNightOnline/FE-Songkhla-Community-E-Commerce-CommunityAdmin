@@ -1,64 +1,18 @@
 <template>
-    <div class="sm:mr-64 flex justify-center my-10">
-        <div
-            class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <form class="space-y-6" @submit.prevent="login">
-                <div v-if="err"
-                    class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                    role="alert">
-                    <span class="font-medium">{{ err }}</span>
-                </div>
-                <h5 class="text-xl font-medium text-gray-900 dark:text-white">
-                    เข้าสู่ระบบ</h5>
-                <div>
-                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        ชื่อผู้ใช้</label>
-                    <input type="username" name="username" id="username"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                        v-model="username" placeholder="username" required>
-                </div>
-                <div>
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        รหัสผ่าน</label>
-                    <input type="password" name="password" id="password" placeholder="••••••••"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                        v-model="password" required>
-                </div>
-
-                <button type="submit"
-                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    เข้าสู่ระบบ</button>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    ยังไม่ได้ลงทะเบียน?
-                    <RouterLink to="/signup" class="text-blue-700 hover:underline dark:text-blue-500">
-                        สร้างบัญชี</RouterLink>
-                </div>
-            </form>
-        </div>
-    </div>
+    <OldPage v-if="false" />
+    <NewPage />
 </template>
 
 <script lang="ts">
-import { useUserStore } from "@/store/index"
-export default {
-    setup() {
-        const userStore = useUserStore()
-        return { userStore }
-    },
-    data() {
-        return {
-            username: "user04",
-            password: "1234",
-            err: "",
-        }
-    },
-    methods: {
-        async login() {
-            const res = await this.userStore.signIn(this.username, this.password)
-            if (res == 'err') this.err = 'ชื่อผู้ใช้หรือรหัสผ่านผิด'
-        },
-    },
-    mounted() {
+import { defineComponent } from 'vue'
+
+import OldPage from '@/components/Auth/Login/OldPage.vue'
+import NewPage from '@/components/Auth/Login/NewPage.vue'
+
+export default defineComponent({
+    components: {
+        OldPage,
+        NewPage
     }
-}
+})
 </script>

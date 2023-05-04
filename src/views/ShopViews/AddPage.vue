@@ -1,4 +1,9 @@
-
+<style>
+.required:after {
+    content: " *";
+    color: red;
+}
+</style>
 <template>
     <div class="mt-10 container mx-auto grid justify-items-center">
         <div
@@ -7,30 +12,41 @@
                 <div class="space-y-6">
                     <h5 class="text-xl font-medium text-gray-900 dark:text-white">เพิ่มข้อมูลสินค้า</h5>
                     <div>
-
+                        <label for="product-name"
+                            class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ชื่อสินค้า</label>
                         <input v-model="product.name" type="text" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="ชื่อสินค้า" required>
                     </div>
                     <div>
+                        <label for="price" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ราคา</label>
                         <input v-model="product.price" type="text" name="price" id="price"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="ราคา" required>
                     </div>
                     <div>
+                        <label for="qty" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            จำนวนสินค้า</label>
                         <input v-model="product.quantity" type="number" name="quantity" id="quantity"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="จำนวนสินค้า" required>
                     </div>
                     <div>
+                        <label for="category" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ประเภทสินค้า</label>
                         <select v-model="product.category_id" id="category_id" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="-1" selected disabled>ประเภทสินค้า</option>
-                            <option v-for="({ category_id, name }, index) in default_categories" :key="index" :value="category_id">{{ name }}
+                            <option v-for="({ category_id, name }, index) in default_categories" :key="index"
+                                :value="category_id">{{ name }}
                             </option>
                         </select>
                     </div>
                     <div>
+                        <label for="levels" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            ระดับสินค้า</label>
                         <select v-model="product.otop" id="otop" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="-1" selected disabled>ระดับสินค้า</option>
@@ -43,6 +59,8 @@
                         </select>
                     </div>
                     <div>
+                        <label for="gram" class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            น้ำหนัก (กรัม)</label>
                         <input v-model="product.gram" type="number" name="quantity" id="quantity"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="น้ำหนัก (กรัม)" required>

@@ -85,7 +85,8 @@ export default {
         const data = JSON.parse(localStorage.getItem('user')!)
 
         const getOrders = await axios.get('http://localhost:3001/api/orders')
-        const ordersData = getOrders.data
+        const ordersData = getOrders.data.sort((a: any, b: any) => b.order_id - a.order_id)
+
 
         ordersData.map((order: any) => {
             if (order.users_commu_id == data.users_commu_id) {
@@ -108,7 +109,6 @@ export default {
             }
         })
         this.orders.shift()
-
     },
 
 }

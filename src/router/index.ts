@@ -15,6 +15,11 @@ const router = createRouter({
           component: () => import('@/views/HomePage.vue')
         },
         {
+          path: '/products',
+          name: 'Products',
+          component: () => import('@/views/ShopViews/Products.vue')
+        },
+        {
           path: '/add',
           name: 'Add',
           component: () => import('@/views/ShopViews/AddPage.vue')
@@ -46,17 +51,6 @@ const router = createRouter({
           name: 'Test',
           component: () => import('@/views/ShopViews/Test.vue')
         },
-        // Auth
-        {
-          "path": "/login",
-          "name": "Login",
-          component: () => import('@/views/Auth/LoginPage.vue')
-        },
-        {
-          "path": "/signup",
-          "name": "SignUp",
-          component: () => import('@/views/Auth/SignUpPage.vue')
-        },
         {
           "path": "/setting/profile",
           "name": "SettingProfile",
@@ -77,9 +71,30 @@ const router = createRouter({
               "name": "SettingPayment",
               component: () => import('@/components/Auth/Setting/Payment.vue')
             },
+            {
+              "path": "/setting/payment/add",
+              "name": "AddPayment",
+              component: () => import('@/components/Auth/Setting/SubPayment/AddPayment.vue')
+            },
+            {
+              "path": "/setting/payment/edit/:id",
+              "name": "EditPayment",
+              component: () => import('@/components/Auth/Setting/SubPayment/EditPayment.vue')
+            },
           ]
         },
       ]
+    },
+    // Auth
+    {
+      "path": "/login",
+      "name": "Login",
+      component: () => import('@/views/Auth/LoginPage.vue')
+    },
+    {
+      "path": "/signup",
+      "name": "SignUp",
+      component: () => import('@/views/Auth/SignUpPage.vue')
     },
   ]
 })

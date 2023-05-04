@@ -15,6 +15,13 @@ const dropdownMenu = [
     { name: 'OTOP 4 ดาว', value: 4 },
     { name: 'OTOP 5 ดาว', value: 5 },
 ]
+
+const dropdownSort = [
+    { name: 'ผลิตภัณฑ์คงเหลือ', value: 0 },
+    { name: 'น้อยกว่า 10', value: 1 },
+    { name: 'มากไปน้อย', value: 2 },
+    { name: 'น้อยไปมาก', value: 3 },
+]
 </script>
 <script lang="ts">
 import axios from 'axios'
@@ -47,7 +54,9 @@ export default {
             ],
             // Level
             levelSelected: '-1',
-            dataEmty: false
+            dataEmty: false,
+            // Qty remaining
+            qtySelected: '0',
         }
     },
     methods: {
@@ -113,6 +122,24 @@ export default {
             }
             this.checkDataEmty()
         },
+        async qtySelect() {
+            if (this.qtySelected == '0') {
+                this.products = this.defaultProducts
+            } else if (this.qtySelected == '3') {
+                let products = await axios.get('http://localhost:3001/api/products')
+                this.products = products.data.sort((a: any, b: any) => {
+                    return a.quantity - b.quantity
+                })
+            } else if (this.qtySelected == '2') {
+                let products = await axios.get('http://localhost:3001/api/products')
+                this.products = products.data.sort((a: any, b: any) => {
+                    return b.quantity - a.quantity
+                })
+            } else if (this.qtySelected == '1') {
+                let products = await axios.get('http://localhost:3001/api/products')
+                this.products = products.data.filter((product: any) => product.quantity <= 10)
+            }
+        },
         checkDataEmty() {
             if (this.products.length == 0) this.dataEmty = true
             else this.dataEmty = false
@@ -163,6 +190,15 @@ export default {
                     class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                     <option value="-1">ระดับทั้งหมด</option>
                     <option v-for="({ name, value }, index) in dropdownMenu" :key="index" :value="value">
+                        {{ name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mr-4 mb-2 lg:mb-0">
+                <label for="underline_select2" class="sr-only">Underline select</label>
+                <select id="underline_select2" v-model="qtySelected" @change="qtySelect"
+                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <option v-for="({ name, value }, index) in dropdownSort" :key="index" :value="value">
                         {{ name }}
                     </option>
                 </select>

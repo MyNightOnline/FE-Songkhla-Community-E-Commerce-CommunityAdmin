@@ -129,6 +129,10 @@
                 class="w-full lg:w-1/3 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                 {{ getStatus(orderStatus + 1) }}
             </button>
+            <button v-else-if="orderStatus == 0" type="button" @click="cancelOrder($route.params.id)"
+                class="w-full lg:w-1/3 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                ยกเลิกการสั่งซื้อ
+            </button>
         </div>
 
     </div>
@@ -136,9 +140,10 @@
 
 <script lang="ts">
 import axios from 'axios'
-
+import { defineComponent } from 'vue'
 import Modal from '@/components/EditManageOrder.vue/Modal.vue'
 import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
+import el from 'date-fns/locale/el'
 
 interface Detail {
     product_id: number,
@@ -156,7 +161,7 @@ interface Customer {
     tracking_number: string,
 }
 
-export default {
+export default defineComponent({
 
     components: {
         Modal
@@ -237,10 +242,40 @@ export default {
             const formatter = new BuddhistDateFormatter(oldDate)
             const formattedDate = formatter.format()
             return formattedDate
-        }
+        },
+        async cancelOrder(id: any) {
+            let order_details = await axios.get('http://localhost:3001/api/orders/detail/' + id)
+            await order_details.data.forEach(async (order_detail: any) => {
+                let getProduct = await axios.get('http://localhost:3001/api/products/' + order_detail.product_id)
+                let updateQty = await axios.put('http://localhost:3001/api/products/qty/' + getProduct.data.product_id, {
+                    quantity: order_detail.quantity + getProduct.data.quantity
+                })
+                console.log(updateQty)
+                console.log(`** Update Qty Success.`)
+            })
+            let delete_order = await axios.delete('http://localhost:3001/api/orders/' + id)
+        },
     },
 
     async mounted() {
+
+        const dataUser = JSON.parse(localStorage.getItem('user')!)
+        // console.log(dataUser.users_commu_id)
+        let checkPage = false
+        let orderId = await axios.get('http://localhost:3001/api/orders/' + this.$route.params.id)
+        if (orderId.data.length > 0) {
+            orderId.data.forEach((item: any) => {
+                if (item.users_commu_id != dataUser.users_commu_id) {
+                    checkPage = true
+                }
+            })
+        }
+
+        if (orderId.data.length == 0 || checkPage) {
+            this.$router.push('/')
+            alert('คุณไม่มีสิทธิ์เข้าถึง')
+        }
+
         this.arr_detail.shift()
         const order_detail = await axios.get('http://localhost:3001/api/orders/detail/' + this.$route.params.id)
         order_detail.data.map(async (order: any) => {
@@ -276,6 +311,6 @@ export default {
 
     }
 
-}
+})
 
 </script>
