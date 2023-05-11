@@ -1,6 +1,6 @@
 import router from '@/router'
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
 export const useUserStore = defineStore("user", {
     state: () => ({
@@ -13,7 +13,7 @@ export const useUserStore = defineStore("user", {
         async signIn(username: string, password: string) {
             
             try {
-                const res = await axios.post('http://localhost:3001/api/auth/auth-usercommu', {
+                const res = await axiosClient.post('/auth/auth-usercommu', {
                     username: username,
                     password: password
                 })
@@ -28,7 +28,7 @@ export const useUserStore = defineStore("user", {
         },
         async signUp(data: any) {
             try {
-                const res = await axios.post('http://localhost:3001/api/auth/users-community', data)
+                const res = await axiosClient.post('/auth/users-community', data)
                 router.push('/login')
                 return res
             } catch (err) {

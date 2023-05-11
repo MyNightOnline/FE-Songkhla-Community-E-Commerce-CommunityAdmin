@@ -139,7 +139,7 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 import { defineComponent } from 'vue'
 import Modal from '@/components/EditManageOrder.vue/Modal.vue'
 import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
@@ -225,14 +225,14 @@ export default defineComponent({
                     return alert('โปรดกรอกหมายเลขพัสดุให้ครบ')
                 }
                 if (confirm('หมายเลขพัสดุของคุณคือ ' + this.tracking)) {
-                    const result = await axios.put('http://localhost:3001/api/orders/' + this.$route.params.id, {
+                    const result = await axiosClient.put('/orders/' + this.$route.params.id, {
                         order_status: this.orderStatus + 1,
                         tracking_number: this.tracking
                     })
                     if (result) return this.$router.go(0)
                 }
             } else {
-                const result = await axios.put('http://localhost:3001/api/orders/' + this.$route.params.id, {
+                const result = await axiosClient.put('/orders/' + this.$route.params.id, {
                     order_status: this.orderStatus + 1,
                 })
                 if (result) return this.$router.go(0)
@@ -244,16 +244,16 @@ export default defineComponent({
             return formattedDate
         },
         async cancelOrder(id: any) {
-            let order_details = await axios.get('http://localhost:3001/api/orders/detail/' + id)
+            let order_details = await axiosClient.get('/orders/detail/' + id)
             await order_details.data.forEach(async (order_detail: any) => {
-                let getProduct = await axios.get('http://localhost:3001/api/products/' + order_detail.product_id)
-                let updateQty = await axios.put('http://localhost:3001/api/products/qty/' + getProduct.data.product_id, {
+                let getProduct = await axiosClient.get('/products/' + order_detail.product_id)
+                let updateQty = await axiosClient.put('/products/qty/' + getProduct.data.product_id, {
                     quantity: order_detail.quantity + getProduct.data.quantity
                 })
                 console.log(updateQty)
                 console.log(`** Update Qty Success.`)
             })
-            let delete_order = await axios.delete('http://localhost:3001/api/orders/' + id)
+            let delete_order = await axiosClient.delete('/orders/' + id)
         },
     },
 
@@ -262,7 +262,7 @@ export default defineComponent({
         const dataUser = JSON.parse(localStorage.getItem('user')!)
         // console.log(dataUser.users_commu_id)
         let checkPage = false
-        let orderId = await axios.get('http://localhost:3001/api/orders/' + this.$route.params.id)
+        let orderId = await axiosClient.get('/orders/' + this.$route.params.id)
         if (orderId.data.length > 0) {
             orderId.data.forEach((item: any) => {
                 if (item.users_commu_id != dataUser.users_commu_id) {
@@ -277,9 +277,9 @@ export default defineComponent({
         }
 
         this.arr_detail.shift()
-        const order_detail = await axios.get('http://localhost:3001/api/orders/detail/' + this.$route.params.id)
+        const order_detail = await axiosClient.get('/orders/detail/' + this.$route.params.id)
         order_detail.data.map(async (order: any) => {
-            const { data } = await axios.get('http://localhost:3001/api/products')
+            const { data } = await axiosClient.get('/products')
             data.map((item: any) => {
                 if (order.product_id == item.product_id) {
                     this.arr_detail.push({
@@ -294,7 +294,7 @@ export default defineComponent({
             })
 
         })
-        const order = await axios.get('http://localhost:3001/api/orders/' + this.$route.params.id)
+        const order = await axiosClient.get('/orders/' + this.$route.params.id)
         this.allPriceDelivery = order.data[0].delivery_price
         this.orderStatus = order.data[0].order_status
 
@@ -306,7 +306,7 @@ export default defineComponent({
 
         this.customer.tracking_number = order.data[0].tracking_number
 
-        const payment = await axios.get('http://localhost:3001/api/orders/payment/' + order.data[0].payment_id)
+        const payment = await axiosClient.get('/orders/payment/' + order.data[0].payment_id)
         this.urlSlip = payment.data[0].payment_image
 
     }

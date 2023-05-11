@@ -24,7 +24,7 @@ const dropdownSort = [
 ]
 </script>
 <script lang="ts">
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
 interface ValProducts {
     name: string | string[]
@@ -61,10 +61,10 @@ export default {
     },
     methods: {
         async getProducts() {
-            let products = await axios.get('http://localhost:3001/api/products')
+            let products = await axiosClient.get('/products')
             products.data.forEach(async (product: any) => {
                 if (product.users_commu_id == this.dataUser.users_commu_id) {
-                    const { data } = await axios.get('http://localhost:3001/api/category/' + product.category_id)
+                    const { data } = await axiosClient.get('/category/' + product.category_id)
                     let json = {
                         name: product.name,
                         category_id: product.category_id,
@@ -103,7 +103,7 @@ export default {
             }
         },
         async getCategory() {
-            const { data } = await axios.get('http://localhost:3001/api/category')
+            const { data } = await axiosClient.get('/category')
             this.options = data
         },
         categorySelect() {
@@ -126,17 +126,17 @@ export default {
             if (this.qtySelected == '0') {
                 this.products = this.defaultProducts
             } else if (this.qtySelected == '3') {
-                let products = await axios.get('http://localhost:3001/api/products')
+                let products = await axiosClient.get('/products')
                 this.products = products.data.sort((a: any, b: any) => {
                     return a.quantity - b.quantity
                 })
             } else if (this.qtySelected == '2') {
-                let products = await axios.get('http://localhost:3001/api/products')
+                let products = await axiosClient.get('/products')
                 this.products = products.data.sort((a: any, b: any) => {
                     return b.quantity - a.quantity
                 })
             } else if (this.qtySelected == '1') {
-                let products = await axios.get('http://localhost:3001/api/products')
+                let products = await axiosClient.get('/products')
                 this.products = products.data.filter((product: any) => product.quantity <= 10)
             }
         },

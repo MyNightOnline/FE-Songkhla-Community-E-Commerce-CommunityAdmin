@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
 export default defineComponent({
 
@@ -87,13 +87,13 @@ export default defineComponent({
     methods: {
         async getPayment() {
             const data = JSON.parse(localStorage.getItem('user')!)
-            let getAllBank = await axios.get('http://localhost:3001/api/payment')
+            let getAllBank = await axiosClient.get('/payment')
             this.banks = getAllBank.data.filter((bank: any) => data.commu_id == bank.commu_id)
         },
         async deletePayment(id: number) {
             try {
                 if (confirm('คุณต้องการลบ ?')) {
-                    await axios.delete('http://localhost:3001/api/payment/' + id)
+                    await axiosClient.delete('/payment/' + id)
                     this.check_alert = 'ลบบัญชีสำเร็จ'
                     this.getPayment()
                 }

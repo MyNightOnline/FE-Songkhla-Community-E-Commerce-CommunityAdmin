@@ -80,7 +80,7 @@ let date = ref()
 
 onMounted(async () => {
   const dataUser = JSON.parse(localStorage.getItem('user')!)
-  const response = await axios.get('http://localhost:3001/api/orders/detail/users_commu_id/' + dataUser.users_commu_id)
+  const response = await axiosClient.get('/orders/detail/users_commu_id/' + dataUser.users_commu_id)
   const lenReponse = response.data.filter((order: any) => order.order_status == 3).length
 
   date.value = [response.data[0].date, response.data[lenReponse - 1].date]
@@ -101,7 +101,7 @@ const presetRanges = ref([
 import { defineComponent } from 'vue'
 import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
 import { OrderDetail } from '@/interfaces/OrderDetail'
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
 export default defineComponent({
   components: {
@@ -133,7 +133,7 @@ export default defineComponent({
   },
   async mounted() {
     const dataUser = JSON.parse(localStorage.getItem('user')!)
-    const response = await axios.get('http://localhost:3001/api/orders/detail/users_commu_id/' + dataUser.users_commu_id)
+    const response = await axiosClient.get('/orders/detail/users_commu_id/' + dataUser.users_commu_id)
     this.orders = response.data.filter((order: any) => order.order_status == 3)
     this.defaultOrders = response.data.filter((order: any) => order.order_status == 3)
     this.defaultOrders.forEach((item: any, index: any) => {

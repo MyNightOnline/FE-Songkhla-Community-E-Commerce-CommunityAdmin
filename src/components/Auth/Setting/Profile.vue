@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { useUserStore } from "@/store/index"
-import axios from "axios"
+import axiosClient from "@/utils/axios"
 
 export default {
     setup() {
@@ -71,7 +71,7 @@ export default {
             try {
                 const password = this.password == this.cf_password
                 if (!password) return alert('ใส่รหัสผ่านให้ตรงกัน')
-                await axios.put(`http://localhost:3001/api/auth/users-community/${this.users_commu_id}`, {
+                await axiosClient.put(`/auth/users-community/${this.users_commu_id}`, {
                     full_name: this.full_name,
                     password: this.password,
                 })

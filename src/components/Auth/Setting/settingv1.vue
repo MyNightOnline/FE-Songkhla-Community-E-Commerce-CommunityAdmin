@@ -116,7 +116,7 @@
 <script lang="ts">
 import { useUserStore } from "@/store/index"
 import { getAmphure, getTambons } from '@/assets/functions/fetchAreaSongkhla'
-import axios from "axios"
+import axiosClient from "@/utils/axios"
 export default {
     setup() {
         const userStore = useUserStore()
@@ -171,7 +171,7 @@ export default {
 
             console.log(this.users_commu_id + ' ' + this.commu_id)
 
-            await axios.put(`http://localhost:3001/api/commu/` + this.commu_id, {
+            await axiosClient.put(`/commu/` + this.commu_id, {
                 name: this.shop_name,
                 address: this.address,
                 mobile: this.mobile,
@@ -180,7 +180,7 @@ export default {
                 amp: this.selected_amp,
                 tam: this.selected_tam,
             })
-            await axios.put(`http://localhost:3001/api/auth/users-community/` + this.users_commu_id, {
+            await axiosClient.put(`/auth/users-community/` + this.users_commu_id, {
                 full_name: this.full_name,
                 password: this.password,
             })

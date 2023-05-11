@@ -76,10 +76,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getAmphure, getTambons } from '@/assets/functions/fetchAreaSongkhla'
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
-export default {
+export default defineComponent({
 
     data() {
         return {
@@ -119,7 +120,7 @@ export default {
                 this.selected_amp = sAMP.options[sAMP.selectedIndex].text
                 this.selected_tam = sTAM.options[sTAM.selectedIndex].text
 
-                await axios.put(`http://localhost:3001/api/commu/${this.commu_id}`, {
+                await axiosClient.put(`/commu/${this.commu_id}`, {
                     person: this.person,
                     name: this.shop_name,
                     address: this.address,
@@ -154,6 +155,6 @@ export default {
         el2.options[el2.selectedIndex].text = data.tam
     }
 
-}
+})
 
 </script>

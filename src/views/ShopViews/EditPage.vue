@@ -53,7 +53,8 @@
                         <select v-model="product.category_id" id="category_id" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="-1" selected disabled>ประเภทสินค้า</option>
-                            <option v-for="({ category_id, name }, index) in default_categories" :key="index" :value="category_id">{{ name }}
+                            <option v-for="({ category_id, name }, index) in default_categories" :key="index"
+                                :value="category_id">{{ name }}
                             </option>
                         </select>
                     </div>
@@ -152,7 +153,8 @@
 
 <script lang="ts">
 import { useUserStore } from "@/store/index"
-import axios from "axios"
+import axiosClient from "@/utils/axios"
+
 export default {
     setup() {
         const userStore = useUserStore()
@@ -220,7 +222,7 @@ export default {
             formData.append('category_id', this.product.category_id)
 
             try {
-                await axios.put(`http://localhost:3001/api/products/${this.$route.params.id}`, formData)
+                await axiosClient.put(`/products/${this.$route.params.id}`, formData)
                 this.$router.push('/')
             } catch (e) {
                 console.log(e)
@@ -281,17 +283,17 @@ export default {
         },
         async delProduct() {
             if (confirm('คุณต้องการลบผลิตภัณฑ์นี้หรือไม่') == true) {
-                await axios.delete('http://localhost:3001/api/products/' + this.$route.params.id)
+                await axiosClient.delete('/products/' + this.$route.params.id)
                 this.$router.push('/')
             }
 
         },
     },
     async mounted() {
-        const result_category = await axios.get('http://localhost:3001/api/category')
+        const result_category = await axiosClient.get('/category')
         this.default_categories = result_category.data
 
-        const { data } = await axios.get('http://localhost:3001/api/products/' + this.$route.params.id)
+        const { data } = await axiosClient.get('/products/' + this.$route.params.id)
 
         this.product.name = data.name
         this.product.price = data.price

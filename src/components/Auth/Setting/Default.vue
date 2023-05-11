@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import Menu from "@/components/Auth/Setting/Menu.vue"
-</script>
+
 
 <template>
     <Menu />
@@ -18,3 +16,15 @@ import Menu from "@/components/Auth/Setting/Menu.vue"
         </div> -->
     </div>
 </template>
+
+<script setup lang="ts">
+import Menu from "@/components/Auth/Setting/Menu.vue"
+</script>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    name: "SettingDefault"
+})
+</script>

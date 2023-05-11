@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
 export default defineComponent({
     data() {
@@ -71,7 +71,7 @@ export default defineComponent({
                     back_account: this.back_account,
                     account_name: this.account_name,
                 }
-                await axios.post('http://localhost:3001/api/payment', postData)
+                await axiosClient.post('/payment', postData)
                 this.$router.push('/setting/payment')
             } catch (error) {
                 console.error(error)

@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 
 export default defineComponent({
     data() {
@@ -75,7 +75,7 @@ export default defineComponent({
                         back_account: this.back_account,
                         account_name: this.account_name,
                     }
-                    await axios.put(`http://localhost:3001/api/payment/${this.bank_id}`, postData)
+                    await axiosClient.put(`/payment/${this.bank_id}`, postData)
                     this.$router.push('/setting/payment')
                 }
             } catch (error) {
@@ -84,7 +84,7 @@ export default defineComponent({
         },
         async getPaymentId() {
             try {
-                const getBackId = await axios.get('http://localhost:3001/api/payment/' + this.$route.params.id)
+                const getBackId = await axiosClient.get('/payment/' + this.$route.params.id)
                 const backData = getBackId.data[0]
                 this.bank_id = backData.bank_id
                 this.bank_name = backData.bank_name

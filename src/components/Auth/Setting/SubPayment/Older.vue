@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import axios from 'axios'
+import axiosClient from "@/utils/axios"
 import { onMounted } from 'vue'
 import {
     initAccordions,
@@ -61,7 +61,7 @@ onMounted(() => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="({ bank_id, bank_name, back_account, account_name }, index) in banks"
+                <tr v-for="({ bank_id, bank_name, back_account, account_name }, index) in banks" :key="index"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ bank_name }}
@@ -134,7 +134,7 @@ onMounted(() => {
                         <select id="countries" v-model="bank_name" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled value="">เลือกธนาคาร</option>
-                            <option v-for="({ name }, index) in bank_names" :value="name">{{ name }}</option>
+                            <option v-for="({ name }, index) in bank_names" :key="index" :value="name">{{ name }}</option>
                         </select>
                     </div>
                 </div>
@@ -194,7 +194,7 @@ onMounted(() => {
                         <select id="countries" v-model="bank_name" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled value="">เลือกธนาคาร</option>
-                            <option v-for="({ name }, index) in bank_names" :value="name">{{ name }}</option>
+                            <option v-for="({ name }, index) in bank_names" :key="index" :value="name">{{ name }}</option>
                         </select>
                     </div>
                 </div>
@@ -247,7 +247,7 @@ export default {
                     back_account: this.back_account,
                     account_name: this.account_name,
                 }
-                await axios.post('http://localhost:3001/api/payment', postData)
+                await axiosClient.post('/payment', postData)
                 this.check_alert = 'เพิ่มบัญชีสำเร็จ'
                 this.getPayment()
                 document.getElementById('btndefaultModal')?.click()
@@ -280,7 +280,7 @@ export default {
                         back_account: this.back_account,
                         account_name: this.account_name,
                     }
-                    await axios.put(`http://localhost:3001/api/payment/${this.bank_id}`, postData)
+                    await axiosClient.put(`/payment/${this.bank_id}`, postData)
                     this.check_alert = 'แก้ไขบัญชีสำเร็จ'
                     this.getPayment()
                     document.getElementById('medium-modal')?.click()
@@ -292,7 +292,7 @@ export default {
         async deletePayment(id: number) {
             try {
                 if (confirm('คุณต้องการลบ ?')) {
-                    await axios.delete('http://localhost:3001/api/payment/' + id)
+                    await axiosClient.delete('/payment/' + id)
                     this.check_alert = 'ลบบัญชีสำเร็จ'
                     this.getPayment()
                 }
@@ -302,7 +302,7 @@ export default {
         },
         async getPayment() {
             const data = JSON.parse(localStorage.getItem('user')!)
-            let getAllBank = await axios.get('http://localhost:3001/api/payment')
+            let getAllBank = await axiosClient.get('/payment')
             this.banks = getAllBank.data.filter((bank: any) => data.commu_id == bank.commu_id)
         }
     },

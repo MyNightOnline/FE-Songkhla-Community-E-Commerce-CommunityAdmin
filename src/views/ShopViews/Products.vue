@@ -64,7 +64,7 @@ img {
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useUserStore } from "@/store/index"
-import axios from "axios"
+import axiosClient from "@/utils/axios"
 
 import Rating from '@/components/HomePage/Rating.vue'
 
@@ -103,7 +103,7 @@ export default defineComponent({
     async mounted() {
         this.products.pop()
         const data = JSON.parse(localStorage.getItem('user')!)
-        const result = await axios.get('http://localhost:3001/api/products/shop/' + data.users_commu_id)
+        const result = await axiosClient.get('/products/shop/' + data.users_commu_id)
         result.data.map((product: any) => {
             this.products.push(product)
         })

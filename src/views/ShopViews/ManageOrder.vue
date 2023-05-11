@@ -20,7 +20,7 @@ const tabs = [
 </script>
 
 <script lang="ts">
-import axios from "axios"
+import axiosClient from "@/utils/axios"
 
 export default {
 
@@ -84,7 +84,7 @@ export default {
     async mounted() {
         const data = JSON.parse(localStorage.getItem('user')!)
 
-        const getOrders = await axios.get('http://localhost:3001/api/orders')
+        const getOrders = await axiosClient.get('/orders')
         const ordersData = getOrders.data.sort((a: any, b: any) => b.order_id - a.order_id)
 
 

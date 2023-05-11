@@ -133,7 +133,7 @@
 
 <script lang="ts">
 import { useUserStore } from "@/store/index"
-import axios from "axios"
+import axiosClient from "@/utils/axios"
 
 export default {
     setup() {
@@ -201,7 +201,7 @@ export default {
             formData.append('users_commu_id', this.product.users_commu_id)
             formData.append('category_id', this.product.category_id)
 
-            await axios.post('http://localhost:3001/api/products', formData)
+            await axiosClient.post('/products', formData)
 
             await this.$router.push('/')
         },
@@ -250,7 +250,7 @@ export default {
         },
     },
     async mounted() {
-        const result_category = await axios.get('http://localhost:3001/api/category')
+        const result_category = await axiosClient.get('/category')
         this.default_categories = result_category.data
 
         const data = JSON.parse(localStorage.getItem('user')!)
