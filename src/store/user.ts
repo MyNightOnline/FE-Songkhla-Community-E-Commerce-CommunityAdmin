@@ -11,7 +11,7 @@ export const useUserStore = defineStore("user", {
 
     actions: {
         async signIn(username: string, password: string) {
-            
+            console.log(import.meta.env.VITE_BASE_API_URL)
             try {
                 const res = await axiosClient.post('/auth/auth-usercommu', {
                     username: username,
