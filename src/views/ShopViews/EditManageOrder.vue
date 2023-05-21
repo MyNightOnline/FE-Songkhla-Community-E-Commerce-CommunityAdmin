@@ -48,7 +48,7 @@
                                     {{ quantity }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ price }}
+                                    {{ price.toLocaleString('en-US') }}
                                 </td>
                             </tr>
                         </tbody>
@@ -56,17 +56,18 @@
                             <tr class="font-semibold text-gray-900 dark:text-white">
                                 <th scope="row" class="px-6 py-3 text-base">รวม</th>
                                 <td class="px-6 py-3">{{ allQty }}</td>
-                                <td class="px-6 py-3">{{ allPrice }}</td>
+                                <td class="px-6 py-3">{{ allPrice.toLocaleString('en-US') }}</td>
                             </tr>
                             <tr class="font-semibold text-gray-900 dark:text-white">
                                 <th scope="row" class="px-6 py-3 text-base">ค่าจัดส่ง</th>
                                 <td class="px-6 py-3"></td>
-                                <td class="px-6 py-3">{{ allPriceDelivery }}</td>
+                                <td class="px-6 py-3">{{ allPriceDelivery.toLocaleString('en-US') }}</td>
                             </tr>
                             <tr class="font-semibold text-gray-900 dark:text-white">
                                 <th scope="row" class="px-6 py-3 text-base">ชำระเงินทั้งหมด</th>
                                 <td class="px-6 py-3"></td>
-                                <td class="px-6 py-3">{{ Number(allPrice) + Number(allPriceDelivery) }}</td>
+                                <td class="px-6 py-3">{{ (Number(allPrice) +
+                                    Number(allPriceDelivery)).toLocaleString('en-US') }}</td>
                             </tr>
                         </tfoot>
                     </table>
