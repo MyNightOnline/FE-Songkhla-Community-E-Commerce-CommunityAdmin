@@ -296,19 +296,19 @@ export default defineComponent({
 
         })
         const order = await axiosClient.get('/orders/' + this.$route.params.id)
-        this.allPriceDelivery = order.data[0].delivery_price
-        this.orderStatus = order.data[0].order_status
+        this.allPriceDelivery = order.data.delivery_price
+        this.orderStatus = order.data.order_status
 
-        this.customer.full_name = order.data[0].full_name
-        this.customer.mobile = order.data[0].mobile
-        this.customer.address = order.data[0].address
-        this.customer.details = order.data[0].details
-        this.customer.date = order.data[0].date
+        this.customer.full_name = order.data.full_name
+        this.customer.mobile = order.data.mobile
+        this.customer.address = order.data.address
+        this.customer.details = order.data.details
+        this.customer.date = order.data.date
 
-        this.customer.tracking_number = order.data[0].tracking_number
+        this.customer.tracking_number = order.data.tracking_number
 
-        const payment = await axiosClient.get('/orders/payment/' + order.data[0].payment_id)
-        this.urlSlip = payment.data[0].payment_image
+        const payment = await axiosClient.get('/orders/payment/' + this.$route.params.id)
+        this.urlSlip = payment.data.payment_image
 
     }
 
