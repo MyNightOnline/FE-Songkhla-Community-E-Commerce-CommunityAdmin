@@ -1,14 +1,56 @@
 <template>
-    <h1 class="text-2xl">ยินดีต้อนรับคุณ <p class="text-2xl font-semibold inline">{{ 'รดิศ ลำสุณีกาญ' }}</p>
-    </h1>
+    <div class="grid xl:grid-cols-2 gap-4">
+        <div id="alert-additional-content-5"
+            class="p-4 border border-gray-300 rounded-lg bg-gray-50 dark:border-gray-600 dark:bg-gray-800" role="alert">
+            <div class="flex items-center">
+                <svg fill="currentColor" class="w-5 h-5 mr-2 text-gray-800 dark:text-gray-300" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path clip-rule="evenodd" fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.536-4.464a.75.75 0 10-1.061-1.061 3.5 3.5 0 01-4.95 0 .75.75 0 00-1.06 1.06 5 5 0 007.07 0zM9 8.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S7.448 7 8 7s1 .672 1 1.5zm3 1.5c.552 0 1-.672 1-1.5S12.552 7 12 7s-1 .672-1 1.5.448 1.5 1 1.5z">
+                    </path>
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-2xl font-medium text-gray-800 dark:text-gray-300">ยินดีต้อนรับ {{ full_name }}</h3>
+            </div>
+            <div class="mt-2 mb-4 text-sm text-gray-800 dark:text-gray-300">
+                More info about this info dark goes here. This example text is going to run a bit longer so that you can see
+                how
+                spacing within an alert works with this kind of content.
+            </div>
+            <div class="flex">
+                <button type="button"
+                    class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-800">
+                    <svg aria-hidden="true" class="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                        <path fill-rule="evenodd"
+                            d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    View more
+                </button>
+                <button type="button"
+                    class="text-gray-800 bg-transparent border border-gray-700 hover:bg-gray-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-gray-600 dark:hover:bg-gray-600 dark:focus:ring-gray-800 dark:text-gray-300 dark:hover:text-white"
+                    data-dismiss-target="#alert-additional-content-5" aria-label="Close">
+                    Dismiss
+                </button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useUserStore } from '@/store/user'
 
 export default defineComponent({
     setup() {
+        const userStore = useUserStore()
+        const full_name = userStore.user.full_name
 
+        return {
+            full_name
+        }
     },
 })
 </script>

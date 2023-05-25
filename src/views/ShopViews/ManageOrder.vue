@@ -50,12 +50,14 @@ export default {
             else if (status_id == 1) return 'ชำระเงินแล้ว'
             else if (status_id == 2) return 'เตรียมผลิตภัณฑ์'
             else if (status_id == 3) return 'จัดส่งผลิตภัณฑ์'
+            else if (status_id == 4) return 'ยกเลิก'
         },
         getColorStatus(status_id: any) {
             if (status_id == 0) return 'bg-blue-100 text-blue-800'
             else if (status_id == 1) return 'bg-orange-100 text-orange-800'
             else if (status_id == 2) return 'bg-green-100 text-green-800'
             else if (status_id == 3) return 'bg-green-100 text-green-800'
+            else if (status_id == 4) return 'bg-red-100 text-red-800'
         },
         useFun(id: number) {
 

@@ -11,7 +11,7 @@
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         สร้างบัญชี
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="onSubmit">
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
                                 <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">
@@ -49,7 +49,7 @@
                             </div>
                             <div>
                                 <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">
-                                    ข้อมูลร้านค้า</h5>
+                                    ข้อมูลกลุ่มวิสาหกิจชุมชน</h5>
                                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                                     <div class="col-span-2">
                                         <label for="person"
@@ -198,7 +198,7 @@ export default defineComponent({
                 regis_code: this.regis_code,
                 amp: this.selected_amp,
                 tam: this.selected_tam,
-                confirm_status: 1,
+                confirm_status: 0,
             }
 
             await this.userStore.signUp(dataCommu)

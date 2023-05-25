@@ -23,35 +23,35 @@
                 <div class="space-y-6">
                     <h5 class="text-xl font-medium text-gray-900 dark:text-white">อัปเดตข้อมูลสินค้า</h5>
                     <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="first_name" class="required block mb-2 font-medium text-gray-900 dark:text-white">
                             ชื่อสินค้า
                         </label>
                         <input v-model="product.name" type="text" name="name" id="name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="ชื่อสินค้า" required>
                     </div>
                     <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="first_name" class="required block mb-2 font-medium text-gray-900 dark:text-white">
                             ราคา
                         </label>
                         <input v-model="product.price" type="text" name="price" id="price"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="ราคา" required>
                     </div>
                     <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="first_name" class="required block mb-2 font-medium text-gray-900 dark:text-white">
                             จำนวนสินค้า
                         </label>
                         <input v-model="product.quantity" type="number" name="quantity" id="quantity"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="จำนวนสินค้า" required>
                     </div>
                     <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="first_name" class="required block mb-2 font-medium text-gray-900 dark:text-white">
                             ประเภทสินค้า
                         </label>
                         <select v-model="product.category_id" id="category_id" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="-1" selected disabled>ประเภทสินค้า</option>
                             <option v-for="({ category_id, name }, index) in default_categories" :key="index"
                                 :value="category_id">{{ name }}
@@ -59,11 +59,11 @@
                         </select>
                     </div>
                     <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="first_name" class="required block mb-2 font-medium text-gray-900 dark:text-white">
                             ระดับสินค้า
                         </label>
                         <select v-model="product.otop" id="countries"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="-1" selected disabled>ระดับสินค้า</option>
                             <option value="0">ทั่วไป</option>
                             <option value="1">OTOP 1 ดาว</option>
@@ -74,11 +74,11 @@
                         </select>
                     </div>
                     <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="first_name" class="required block mb-2 font-medium text-gray-900 dark:text-white">
                             น้ำหนัก (กรัม)
                         </label>
                         <input v-model="product.gram" type="number" name="quantity" id="quantity"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             placeholder="น้ำหนัก (กรัม)" required>
                     </div>
                 </div>
@@ -99,49 +99,49 @@
                             </div>
                         </div>
                         <br>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">
+                        <label class="block mb-2 font-medium text-gray-900 dark:text-white" for="file_input">
                             อัพโหลดรูปภาพ
                         </label>
                         <div class="grid grid-cols-3 gap-4">
                             <input @change="previewFiles(1, $event)" ref="file1"
-                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                class="block w-full text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 :class="[toggleImg1 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
                                 id="file_input1" type="file">
                             <button v-if="toggleImg1" type="submit" @click="delPreview(1)"
-                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                 ลบรูป
                             </button>
                         </div>
                         <br>
                         <div class="grid grid-cols-3 gap-4">
                             <input @change="previewFiles(2, $event)" ref="file2"
-                                class="col-span-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                class="col-span-2 block w-full text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 :class="[toggleImg2 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
                                 id="file_input2" type="file">
                             <button v-if="toggleImg2" type="submit" @click="delPreview(2)"
-                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                 ลบรูป
                             </button>
                         </div>
                         <br>
                         <div class="grid grid-cols-3 gap-4">
                             <input @change="previewFiles(3, $event)" ref="file3"
-                                class="col-span-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                class="col-span-2 block w-full text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 :class="[toggleImg3 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
                                 id="file_input2" type="file">
                             <button v-if="toggleImg3" type="submit" @click="delPreview(3)"
-                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                 ลบรูป
                             </button>
                         </div>
 
                     </div>
                     <button type="submit"
-                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        อัปเดตข้อมูลสินค้า
+                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        แก้ไขข้อมูลผลิตภัณฑ์
                     </button>
                     <button type="button" @click="delProduct"
-                        class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                         ลบสินค้า
                     </button>
                 </div>
@@ -283,8 +283,15 @@ export default {
         },
         async delProduct() {
             if (confirm('คุณต้องการลบผลิตภัณฑ์นี้หรือไม่') == true) {
-                await axiosClient.delete('/products/' + this.$route.params.id)
-                this.$router.push('/')
+                try {
+                    await axiosClient.put('/products/commu/' + this.$route.params.id, {
+                        users_commu_id: 0
+                    })
+                    alert('ลบผลิตภัณฑ์สำเร็จ')
+                    this.$router.push('/products')
+                } catch (error: any) {
+                    console.log(error)
+                }
             }
 
         },
@@ -320,3 +327,10 @@ export default {
     }
 }
 </script>
+
+<style>
+.required:after {
+    content: " *";
+    color: red;
+}
+</style>

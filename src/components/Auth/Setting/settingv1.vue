@@ -11,7 +11,7 @@
             </div>
             <form @submit.prevent="onSubmit">
                 <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">
-                    ข้อมูลร้านค้า</h5>
+                    ข้อมูลกลุ่มวิสาหกิจชุมชน</h5>
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="shop_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

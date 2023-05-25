@@ -6,7 +6,7 @@
         </span>
     </div>
     <h5 class="mb-6 text-xl font-semibold text-gray-900 dark:text-white">
-        ข้อมูลร้านค้า</h5>
+        ข้อมูลกลุ่มวิสาหกิจชุมชน</h5>
     <form @submit.prevent="updatComunity">
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div class="col-span-2">

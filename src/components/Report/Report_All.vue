@@ -1,3 +1,112 @@
+<template>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+        <div class="lg:flex lg:items-center lg:justify-end p-4">
+            <div class="search mr-4 mb-2 lg:mb-0">
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <input v-model="search" @input="getVal()" type="text" id="table-search"
+                        class="block w-full lg:w-80 p-2 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="ค้นหา">
+                </div>
+            </div>
+            <div class="mr-4 mb-2 lg:mb-0">
+                <select id="small" v-model="selected" @change="categorySelect"
+                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <option value="0">ประเภททั้งหมด</option>
+                    <option v-for="({ category_id, name }, index) in options" :key="index" :value="category_id">{{ name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mr-4 mb-2 lg:mb-0">
+                <label for="underline_select2" class="sr-only">Underline select</label>
+                <select id="underline_select2" v-model="levelSelected" @change="levelSelect"
+                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <option value="-1">ระดับทั้งหมด</option>
+                    <option v-for="({ name, value }, index) in dropdownMenu" :key="index" :value="value">
+                        {{ name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mr-4 mb-2 lg:mb-0">
+                <label for="underline_select2" class="sr-only">Underline select</label>
+                <select id="underline_select2" v-model="qtySelected" @change="qtySelect"
+                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <option v-for="({ name, value }, index) in dropdownSort" :key="index" :value="value">
+                        {{ name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="pb-28">
+            <div v-if="dataEmty">
+                <div class="flex items-center p-4 mb-4 text-lg max-w-sm ml-8 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    role="alert">
+                    <svg aria-hidden="true" class="flex-shrink-0 inline w-6 h-6 mr-3" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div>
+                        <span class="font-medium">ไม่มีข้อมูล</span>
+                    </div>
+                </div>
+            </div>
+            <table v-else class="w-[600px] md:w-full text-base text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            ชื่อ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            ประเภท
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            ระดับ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            ราคา
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            จำนวน/คงเหลือ
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="({ name, category_name, otop, price, quantity }, index) in products" :key="index"
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ category_name + '10' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ getLevelOtop(otop) }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ price }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ quantity }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import {
@@ -124,25 +233,47 @@ export default {
         },
         async qtySelect() {
             if (this.qtySelected == '0') {
+
                 this.products = this.defaultProducts
+
             } else if (this.qtySelected == '3') {
+
                 let products = await axiosClient.get('/products')
                 this.products = products.data.sort((a: any, b: any) => {
                     return a.quantity - b.quantity
                 })
+                products.data = products.data.filter(async (product: any) => {
+                    const { data } = await axiosClient.get('/category/' + product.category_id)
+                    console.log(data)
+                    return product
+                })
+                this.products = this.productByCommuId(products.data)
+
             } else if (this.qtySelected == '2') {
+
                 let products = await axiosClient.get('/products')
                 this.products = products.data.sort((a: any, b: any) => {
                     return b.quantity - a.quantity
                 })
+                this.products = this.productByCommuId(products.data)
+
             } else if (this.qtySelected == '1') {
+
                 let products = await axiosClient.get('/products')
-                this.products = products.data.filter((product: any) => product.quantity <= 10)
+                this.products = products.data.filter((product: any) => product.quantity < 10)
+                this.products = this.productByCommuId(products.data)
+
             }
         },
         checkDataEmty() {
             if (this.products.length == 0) this.dataEmty = true
             else this.dataEmty = false
+        },
+        productByCommuId(products: any) {
+            const result = products.filter((pd: any) => {
+                return pd.users_commu_id == this.dataUser.users_commu_id
+            })
+            return result
         }
     },
     mounted() {
@@ -156,112 +287,3 @@ export default {
 }
 
 </script>
-
-<template>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-        <div class="lg:flex lg:items-center lg:justify-end p-4">
-            <div class="search mr-4 mb-2 lg:mb-0">
-                <label for="table-search" class="sr-only">Search</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input v-model="search" @input="getVal()" type="text" id="table-search"
-                        class="block w-full lg:w-80 p-2 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="ค้นหา">
-                </div>
-            </div>
-            <div class="mr-4 mb-2 lg:mb-0">
-                <select id="small" v-model="selected" @change="categorySelect"
-                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option value="0">ประเภททั้งหมด</option>
-                    <option v-for="({ category_id, name }, index) in options" :key="index" :value="category_id">{{ name }}
-                    </option>
-                </select>
-            </div>
-            <div class="mr-4 mb-2 lg:mb-0">
-                <label for="underline_select2" class="sr-only">Underline select</label>
-                <select id="underline_select2" v-model="levelSelected" @change="levelSelect"
-                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option value="-1">ระดับทั้งหมด</option>
-                    <option v-for="({ name, value }, index) in dropdownMenu" :key="index" :value="value">
-                        {{ name }}
-                    </option>
-                </select>
-            </div>
-            <div class="mr-4 mb-2 lg:mb-0">
-                <label for="underline_select2" class="sr-only">Underline select</label>
-                <select id="underline_select2" v-model="qtySelected" @change="qtySelect"
-                    class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option v-for="({ name, value }, index) in dropdownSort" :key="index" :value="value">
-                        {{ name }}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="pb-28">
-            <div v-if="dataEmty">
-                <div class="flex items-center p-4 mb-4 text-lg max-w-sm ml-8 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                    role="alert">
-                    <svg aria-hidden="true" class="flex-shrink-0 inline w-6 h-6 mr-3" fill="currentColor"
-                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="sr-only">Info</span>
-                    <div>
-                        <span class="font-medium">ไม่มีข้อมูล</span>
-                    </div>
-                </div>
-            </div>
-            <table v-else class="w-[600px] md:w-full text-base text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            ชื่อ
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            ประเภท
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            ระดับ
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            ราคา
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            จำนวน/คงเหลือ
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="({ name, category_name, otop, price, quantity }, index) in products" :key="index"
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ name }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ category_name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ getLevelOtop(otop) }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ price }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ quantity }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</template>

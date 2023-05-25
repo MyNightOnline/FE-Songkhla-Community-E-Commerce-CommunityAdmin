@@ -12,7 +12,7 @@ onMounted(() => {
 
 const tabs = [
     { name: 'รายงานผลิตภัณฑ์', id: 'report-product-tab', target: 'all', },
-    { name: 'รายงานการสั่งซื้อผลิตภัณฑ์', id: 'report-product-tab', target: 'order', },
+    { name: 'รายงานการสั่งซื้อ', id: 'report-product-tab', target: 'order', },
     { name: 'รายงานรายได้', id: 'report-income-tab', target: 'paid', },
 ]
 </script>

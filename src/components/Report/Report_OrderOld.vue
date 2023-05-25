@@ -16,6 +16,7 @@
                     placeholder="ค้นหา">
             </div>
             <div class="ml-5">
+                <label for="underline_select" class="sr-only">Underline select</label>
                 <select id="underline_select" v-model="selected1" @change="updateSelect1"
                     class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                     <option v-for="({ value, title }, index) in option1" :key="index" :value="value">{{ title }}</option>
@@ -46,7 +47,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="({ order_id, full_name, total, date, order_status }, index) in orderByUsersCommuId" :key="index"
+                <tr v-for="({ order_id, full_name, total, date, order_status }, index) in orders" :key="index"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -56,7 +57,7 @@
                         {{ full_name }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ dateFormat(date) }}
+                        {{ date }}
                     </td>
 
                     <td class="px-6 py-4">
@@ -76,125 +77,119 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
+import { Order } from '@/interfaces/Orders'
 import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
-import axiosClient from '@/utils/axios'
 
 export default defineComponent({
-    data() {
-        return {
-            orderByUsersCommuId: [
-                {
-                    "order_id": 101,
-                    "full_name": "บวรรัช สุรศักดิ์อุดม",
-                    "mobile": "0123456678",
-                    "address": "3110 Mustang Rd Alvin TX 77511-4898 USA",
-                    "details": "",
-                    "date": "2023-05-22T17:00:00.000Z",
-                    "order_status": 4,
-                    "total_price": 500,
-                    "delivery_price": 45,
-                    "tracking_number": null,
-                    "total": 545,
-                    "users_id": 13,
-                    "users_commu_id": 24,
-                    "payment_id": 0
-                }
-            ],
-            defaultOrderByUsersCommuId: [
-                {
-                    "order_id": 101,
-                    "full_name": "บวรรัช สุรศักดิ์อุดม",
-                    "mobile": "0123456678",
-                    "address": "3110 Mustang Rd Alvin TX 77511-4898 USA",
-                    "details": "",
-                    "date": "2023-05-22T17:00:00.000Z",
-                    "order_status": 4,
-                    "total_price": 500,
-                    "delivery_price": 45,
-                    "tracking_number": null,
-                    "total": 545,
-                    "users_id": 13,
-                    "users_commu_id": 24,
-                    "payment_id": 0
-                }
-            ],
-            title: [
-                { name: 'รหัสคำสั่งซื้อ' },
-                { name: 'ชื่อผู้ซื้อ' },
-                { name: 'วันที่' },
-                { name: 'ราคารวม' },
-                { name: 'สถานะ' },
-            ],
-            lengthOrders: 0,
-            selected1: '-1',
-            option1: [
-                { value: '-1', title: 'ทั้งหมด' },
-                { value: '0', title: 'ยังไม่ชำระเงิน' },
-                { value: '1', title: 'ชำระเงินแล้ว' },
-                { value: '2', title: 'เตรียมผลิตภัณฑ์' },
-                { value: '3', title: 'จัดส่งผลิตภัณฑ์' },
-                { value: '4', title: 'ยกเลิก' },
-            ],
-            search: '',
+    setup() {
+        const dataUser = JSON.parse(localStorage.getItem('user')!)
+        let selected1 = ref('-1')
+        const option1 = [
+            { value: '-1', title: 'ทั้งหมด' },
+            { value: '0', title: 'ยังไม่ชำระเงิน' },
+            { value: '1', title: 'ชำระเงินแล้ว' },
+            { value: '2', title: 'เตรียมผลิตภัณฑ์' },
+            { value: '3', title: 'จัดส่งผลิตภัณฑ์' },
+        ]
 
+        const title = [
+            { name: 'รหัสคำสั่งซื้อ' },
+            { name: 'ชื่อผู้ซื้อ' },
+            { name: 'วันที่' },
+            { name: 'ราคารวม' },
+            { name: 'สถานะ' },
+        ]
+
+        let orders = ref<Order[]>([])
+        const defaultOrders = ref<Order[]>([])
+        const errorMessage = ref('')
+        let lengthOrders = ref(0)
+        let search = ref('')
+        const loadOrders = async () => {
+
+            try {
+                const response = await fetch('/orders')
+                if (!response.ok) {
+                    throw new Error('Failed to load orders')
+                }
+                const data = await response.json()
+                orders.value = data
+                orders.value = orders.value.filter((order: Order) => {
+                    order.date = dateFormat(order.date)
+                    return order.users_commu_id == dataUser.users_commu_id
+                })
+                console.log(orders.value)
+                defaultOrders.value = data
+                lengthOrders.value = orders.value.length
+            } catch (error: any) {
+                errorMessage.value = error.message
+            }
         }
-    },
-    methods: {
-        async getOrder() {
-            this.orderByUsersCommuId.pop()
-            this.defaultOrderByUsersCommuId.pop()
-            const dataUser = JSON.parse(localStorage.getItem('user') || '[]')
-
-            const order = await axiosClient.get('/orders')
-            const dataOrder = order.data.sort((a: any, b: any) => b.order_id - a.order_id)
-
-            const orderShop = dataOrder.filter((iOrder: any) => {
-                return iOrder.users_commu_id == dataUser.users_commu_id
-            })
-            this.orderByUsersCommuId = orderShop
-            this.defaultOrderByUsersCommuId = orderShop
-            this.lengthOrders = orderShop.length
-
-            console.log(this.orderByUsersCommuId)
-        },
-        formatDate(date: any) {
-            const _date = new Date(date)
-            _date.setDate(_date.getDate() + 1)
-            const formattedDate = _date.toISOString().split('T')[0]
-            return formattedDate
-        },
-        getStatus(status_id: any) {
+        const getStatus = (status_id: any) => {
             if (status_id == 0) return 'ยังไม่ชำระเงิน'
             else if (status_id == 1) return 'ชำระเงินแล้ว'
             else if (status_id == 2) return 'เตรียมผลิตภัณฑ์'
             else if (status_id == 3) return 'จัดส่งผลิตภัณฑ์'
-            else if (status_id == 4) return 'ยกเลิก'
-        },
-        getColorStatus(status_id: any) {
+        }
+        const getColorStatus = (status_id: any) => {
             if (status_id == 0) return 'bg-blue-100 text-blue-800'
             else if (status_id == 1) return 'bg-orange-100 text-orange-800'
             else if (status_id == 2) return 'bg-green-100 text-green-800'
             else if (status_id == 3) return 'bg-green-100 text-green-800'
-            else if (status_id == 4) return 'bg-red-100 text-red-800'
-        },
-        dateFormat(oldDate: any) {
+        }
+        const dateFormat = (oldDate: any) => {
             const formatter = new BuddhistDateFormatter(oldDate)
             const formattedDate = formatter.format()
             return formattedDate
-        },
-        updateSelect1() {
-            if (this.selected1 == '-1') {
-                this.orderByUsersCommuId = this.defaultOrderByUsersCommuId
-            } else {
-                this.orderByUsersCommuId = this.defaultOrderByUsersCommuId.filter((order) => order.order_status == Number(this.selected1))
+        }
+        const updateSelect1 = () => {
+            if (selected1.value == '-1') {
+                lengthOrders.value = 1
+                return funcDefaultOrders()
             }
-        },
-        searchInput() {
+            orders.value = defaultOrders.value.filter(order => order.order_status == selected1.value)
+            lengthOrders.value = orders.value.length
+        }
+        const searchInput = () => {
+            let word = search.value
+            if (word.length) {
+                orders.value = defaultOrders.value.filter((order: Order) => {
+                    let result = (
+                        order.order_id.toString().includes(word) ||
+                        order.full_name.includes(word) ||
+                        order.date.includes(word) ||
+                        order.total.toString().includes(word) ||
+                        order.order_status.toString().includes(word)
+                    )
+                    return result
+                })
+            } else {
+                funcDefaultOrders()
+            }
+        }
 
+        const funcDefaultOrders = () => {
+            return orders.value = defaultOrders.value
+        }
+
+        onMounted(() => {
+            loadOrders()
+        })
+
+        return {
+            getStatus,
+            getColorStatus,
+            dateFormat,
+            updateSelect1,
+            searchInput,
+            orders,
+            errorMessage,
+            selected1,
+            option1,
+            title,
+            lengthOrders,
+            search,
         }
     },
-    mounted() {
-        this.getOrder()
-    }
 })
 </script>

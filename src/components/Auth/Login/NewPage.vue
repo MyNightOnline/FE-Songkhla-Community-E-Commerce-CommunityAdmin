@@ -53,13 +53,12 @@ export default defineComponent({
         return {
             username: "user04",
             password: "1234",
-            err: "",
         }
     },
     methods: {
         async login() {
             const res = await this.userStore.signIn(this.username, this.password)
-            if (res == 'err') this.err = 'ชื่อผู้ใช้หรือรหัสผ่านผิด'
+            if (res == 'err') alert('ชื่อผู้ใช้หรือรหัสผ่านผิด')
         },
     },
     mounted() {

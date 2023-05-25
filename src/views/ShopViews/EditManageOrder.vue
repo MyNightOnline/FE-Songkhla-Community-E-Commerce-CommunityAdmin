@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="flex justify-between mt-5">
-                    <div v-if="orderStatus > 1">
+                    <div v-if="orderStatus > 1 && orderStatus != 4">
                         <label for="default-input"
                             class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             หมายเลขพัสดุ
@@ -125,7 +125,7 @@
         </div>
 
         <div class="flex justify-center my-5">
-            <button v-if="orderStatus + 1 != 4 && orderStatus != 0" type="button"
+            <button v-if="orderStatus + 1 != 5 && orderStatus != 0" type="button"
                 @click="(orderStatus == 2) ? submitStatus(2) : submitStatus(0)"
                 class="w-full lg:w-1/3 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                 {{ getStatus(orderStatus + 1) }}
@@ -213,12 +213,14 @@ export default defineComponent({
             else if (status_id == 1) return 'ชำระเงินแล้ว'
             else if (status_id == 2) return 'เตรียมผลิตภัณฑ์'
             else if (status_id == 3) return 'จัดส่งผลิตภัณฑ์'
+            else if (status_id == 4) return 'ยกเลิก'
         },
         getColorStatus(status_id: any) {
             if (status_id == 0) return 'bg-blue-100 text-blue-800'
             else if (status_id == 1) return 'bg-orange-100 text-orange-800'
             else if (status_id == 2) return 'bg-green-100 text-green-800'
             else if (status_id == 3) return 'bg-green-100 text-green-800'
+            else if (status_id == 4) return 'bg-red-100 text-red-800'
         },
         async submitStatus(num: number) {
             if (num == 2) {
@@ -254,7 +256,10 @@ export default defineComponent({
                 console.log(updateQty)
                 console.log(`** Update Qty Success.`)
             })
-            let delete_order = await axiosClient.delete('/orders/' + id)
+            await axiosClient.put('/orders/' + id, {
+                order_status: 4
+            })
+            this.$router.go(0)
         },
     },
 

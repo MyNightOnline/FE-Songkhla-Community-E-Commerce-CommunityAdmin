@@ -122,7 +122,7 @@
                     </div>
                     <button type="submit"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        เพิ่มข้อมูลสินค้า
+                        เพิ่มข้อมูลผลิตภัณฑ์
                     </button>
                 </div>
             </form>
@@ -201,7 +201,13 @@ export default {
             formData.append('users_commu_id', this.product.users_commu_id)
             formData.append('category_id', this.product.category_id)
 
-            await axiosClient.post('/products', formData)
+            try {
+                await axiosClient.post('/products', formData)
+                alert('เพิ่มผลิตภัณฑ์สำเร็จ')
+            } catch (error: any) {
+                console.log(error)
+                alert(`เพิ่มผลิตภัณฑ์ไม่สำเร็จ\n Error: ${error}`)
+            }
 
             await this.$router.push('/')
         },

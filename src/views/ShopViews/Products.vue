@@ -8,9 +8,9 @@ img {
 <template>
     <div class="container mx-auto">
 
-        <div class="mt-16 mb-8 md:flex md:items-center md:justify-between">
-            <h1 class="text-2xl">ยินดีต้อนรับคุณ <p class="text-2xl font-semibold inline">{{ 'รดิศ ลำสุณีกาญ' }}</p>
-            </h1>
+        <div class="mt-16 mb-8 md:flex md:items-center md:justify-end">
+            <!-- <h1 class="text-2xl">ยินดีต้อนรับคุณ <p class="text-2xl font-semibold inline">{{ 'รดิศ ลำสุณีกาญ' }}</p>
+            </h1> -->
             <h1 class="text-xl">ผลิตภัณฑ์ทั้งหมดของคุณมี {{ count_products }} ชิ้น</h1>
         </div>
 
