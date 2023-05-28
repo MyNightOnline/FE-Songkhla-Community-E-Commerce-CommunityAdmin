@@ -155,7 +155,7 @@ export default defineComponent({
             this.defaultOrderByUsersCommuId = orderShop
             this.lengthOrders = orderShop.length
 
-            console.log(this.orderByUsersCommuId)
+            // console.log(this.orderByUsersCommuId)
         },
         formatDate(date: any) {
             const _date = new Date(date)

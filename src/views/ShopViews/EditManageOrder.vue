@@ -74,6 +74,9 @@
                 </div>
 
                 <div class="flex justify-between mt-5">
+                    <div class="flex items-end">
+                        <Modal v-if="urlSlip && orderStatus != 0" :urlSlip="urlSlip" :orderId="$route.params.id" />
+                    </div>
                     <div v-if="orderStatus > 1 && orderStatus != 4">
                         <label for="default-input"
                             class="required block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -84,9 +87,6 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <input type="text" id="default-input" v-model="tracking" v-else
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    </div>
-                    <div class="flex items-end">
-                        <Modal v-if="urlSlip && orderStatus != 0" :urlSlip="urlSlip" :orderId="$route.params.id" />
                     </div>
                 </div>
 
@@ -125,12 +125,12 @@
         </div>
 
         <div class="flex justify-center my-5">
-            <button v-if="orderStatus + 1 != 5 && orderStatus != 0" type="button"
+            <button v-if="orderStatus + 1 != 4 && orderStatus != 0 && orderStatus != 4" type="button"
                 @click="(orderStatus == 2) ? submitStatus(2) : submitStatus(0)"
                 class="w-full lg:w-1/3 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                 {{ getStatus(orderStatus + 1) }}
             </button>
-            <button v-else-if="orderStatus == 0" type="button" @click="cancelOrder($route.params.id)"
+            <button v-else-if="orderStatus == 0" type="button" @click="cancelOrder($route.params.id, orderStatus)"
                 class="w-full lg:w-1/3 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                 ยกเลิกการสั่งซื้อ
             </button>
@@ -144,7 +144,6 @@ import axiosClient from "@/utils/axios"
 import { defineComponent } from 'vue'
 import Modal from '@/components/EditManageOrder.vue/Modal.vue'
 import { BuddhistDateFormatter } from '@/assets/functions/BuddhistDateFormatter'
-import el from 'date-fns/locale/el'
 
 interface Detail {
     product_id: number,
@@ -235,6 +234,16 @@ export default defineComponent({
                     if (result) return this.$router.go(0)
                 }
             } else {
+                const detailsOrder = await axiosClient.get('/orders/detail/' + this.$route.params.id)
+                const dataDetails = detailsOrder.data
+                dataDetails.forEach(async (detail: any) => {
+                    console.log(detail)
+                    const getProduct = await axiosClient.get('/products/' + detail.product_id)
+                    const qtyProduct = await getProduct.data.quantity
+                    await axiosClient.put('/products/qty/' + detail.product_id, {
+                        "quantity": qtyProduct - detail.quantity
+                    })
+                })
                 const result = await axiosClient.put('/orders/' + this.$route.params.id, {
                     order_status: this.orderStatus + 1,
                 })
@@ -246,19 +255,26 @@ export default defineComponent({
             const formattedDate = formatter.format()
             return formattedDate
         },
-        async cancelOrder(id: any) {
-            let order_details = await axiosClient.get('/orders/detail/' + id)
-            await order_details.data.forEach(async (order_detail: any) => {
-                let getProduct = await axiosClient.get('/products/' + order_detail.product_id)
-                let updateQty = await axiosClient.put('/products/qty/' + getProduct.data.product_id, {
-                    quantity: order_detail.quantity + getProduct.data.quantity
+        async cancelOrder(id: any, orderStatus: any) {
+            console.log(orderStatus)
+            if (orderStatus == 0) {
+                await axiosClient.put('/orders/' + id, {
+                    order_status: 4
                 })
-                console.log(updateQty)
-                console.log(`** Update Qty Success.`)
-            })
-            await axiosClient.put('/orders/' + id, {
-                order_status: 4
-            })
+            } else {
+                let order_details = await axiosClient.get('/orders/detail/' + id)
+                await order_details.data.forEach(async (order_detail: any) => {
+                    let getProduct = await axiosClient.get('/products/' + order_detail.product_id)
+                    let updateQty = await axiosClient.put('/products/qty/' + getProduct.data.product_id, {
+                        quantity: order_detail.quantity + getProduct.data.quantity
+                    })
+                    console.log(updateQty)
+                    console.log(`** Update Qty Success.`)
+                })
+                await axiosClient.put('/orders/' + id, {
+                    order_status: 4
+                })
+            }
             this.$router.go(0)
         },
     },

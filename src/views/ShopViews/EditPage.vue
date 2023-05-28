@@ -223,7 +223,8 @@ export default {
 
             try {
                 await axiosClient.put(`/products/${this.$route.params.id}`, formData)
-                this.$router.push('/')
+                alert('แก้ไขข้อมูลสำเร็จ')
+                this.$router.push('/products')
             } catch (e) {
                 console.log(e)
             }

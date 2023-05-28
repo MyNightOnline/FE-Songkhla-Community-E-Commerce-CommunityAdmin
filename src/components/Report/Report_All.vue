@@ -89,7 +89,7 @@
                             {{ name }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ category_name + '10' }}
+                            {{ category_name }}
                         </td>
                         <td class="px-6 py-4">
                             {{ getLevelOtop(otop) }}
@@ -127,7 +127,7 @@ const dropdownMenu = [
 
 const dropdownSort = [
     { name: 'ผลิตภัณฑ์คงเหลือ', value: 0 },
-    { name: 'น้อยกว่า 10', value: 1 },
+    // { name: 'น้อยกว่า 10', value: 1 },
     { name: 'มากไปน้อย', value: 2 },
     { name: 'น้อยไปมาก', value: 3 },
 ]
@@ -238,32 +238,36 @@ export default {
 
             } else if (this.qtySelected == '3') {
 
-                let products = await axiosClient.get('/products')
+                let products = await axiosClient.get('/products/admin')
                 this.products = products.data.sort((a: any, b: any) => {
                     return a.quantity - b.quantity
                 })
-                products.data = products.data.filter(async (product: any) => {
-                    const { data } = await axiosClient.get('/category/' + product.category_id)
-                    console.log(data)
-                    return product
+                let dataRes = this.productByCommuId(products.data)
+                dataRes.map((data: any) => {
+                    data['category_name'] = data.categoryname
                 })
-                this.products = this.productByCommuId(products.data)
+                this.products = dataRes
 
             } else if (this.qtySelected == '2') {
 
-                let products = await axiosClient.get('/products')
+                let products = await axiosClient.get('/products/admin')
                 this.products = products.data.sort((a: any, b: any) => {
                     return b.quantity - a.quantity
                 })
-                this.products = this.productByCommuId(products.data)
-
-            } else if (this.qtySelected == '1') {
-
-                let products = await axiosClient.get('/products')
-                this.products = products.data.filter((product: any) => product.quantity < 10)
-                this.products = this.productByCommuId(products.data)
+                let dataRes = this.productByCommuId(products.data)
+                dataRes.map((data: any) => {
+                    data['category_name'] = data.categoryname
+                })
+                this.products = dataRes
 
             }
+            // else if (this.qtySelected == '1') {
+
+            //     let products = await axiosClient.get('/products')
+            //     this.products = products.data.filter((product: any) => product.quantity < 10)
+            //     this.products = this.productByCommuId(products.data)
+
+            // }
         },
         checkDataEmty() {
             if (this.products.length == 0) this.dataEmty = true

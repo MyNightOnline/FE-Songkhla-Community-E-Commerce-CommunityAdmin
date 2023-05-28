@@ -24,4 +24,5 @@ export interface OrderDetail {
     image_2: string
     image_3: string
     category_id: number
+    order_details_price: number
   }
