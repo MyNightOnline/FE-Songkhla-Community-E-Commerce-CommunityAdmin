@@ -1,10 +1,10 @@
 <template>
-    <div v-if="check_alert"
+    <!-- <div v-if="check_alert"
         class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
         <span class="font-medium">
             {{ check_alert }}
         </span>
-    </div>
+    </div> -->
     <h5 class="mb-6 text-xl font-bold text-gray-900 dark:text-white">
         ข้อมูลผู้ใช้
     </h5>
@@ -76,6 +76,7 @@ export default {
                     password: this.password,
                 })
                 this.check_alert = "อัปเดตข้อมูลสำเร็จ"
+                alert("อัปเดตข้อมูลสำเร็จ")
             } catch (error) {
                 console.log(error)
             }

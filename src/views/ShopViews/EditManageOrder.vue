@@ -240,6 +240,13 @@ export default defineComponent({
                     console.log(detail)
                     const getProduct = await axiosClient.get('/products/' + detail.product_id)
                     const qtyProduct = await getProduct.data.quantity
+                    if (detail.quantity > qtyProduct) {
+                        alert('มีผลิตภัณฑ์ไม่เพียงพอ ระบบจะยกเลิกคำสั่งซื้ออัตโนมัติ')
+                        await axiosClient.put('/orders/' + this.$route.params.id, {
+                            order_status: 4,
+                        })
+                        return this.$router.go(0)
+                    }
                     await axiosClient.put('/products/qty/' + detail.product_id, {
                         "quantity": qtyProduct - detail.quantity
                     })

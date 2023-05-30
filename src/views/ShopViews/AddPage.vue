@@ -87,7 +87,7 @@
                             อัพโหลดรูปภาพ
                         </label>
                         <div class="grid grid-cols-3 gap-4">
-                            <input @change="previewFiles(1, $event)" ref="file1"
+                            <input @change="previewFiles(1, $event)" ref="file1" accept="image/*"
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 :class="[toggleImg1 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
                                 id="file_input1" type="file" required>
@@ -98,7 +98,7 @@
                         </div>
                         <br>
                         <div class="grid grid-cols-3 gap-4">
-                            <input @change="previewFiles(2, $event)" ref="file2"
+                            <input @change="previewFiles(2, $event)" ref="file2" accept="image/*"
                                 class="col-span-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 :class="[toggleImg2 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
                                 id="file_input2" type="file" required>
@@ -109,7 +109,7 @@
                         </div>
                         <br>
                         <div class="grid grid-cols-3 gap-4">
-                            <input @change="previewFiles(3, $event)" ref="file3"
+                            <input @change="previewFiles(3, $event)" ref="file3" accept="image/*"
                                 class="col-span-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                 :class="[toggleImg3 ? 'col-span-2' : 'col-span-3']" aria-describedby="file_input_help"
                                 id="file_input2" type="file" required>
