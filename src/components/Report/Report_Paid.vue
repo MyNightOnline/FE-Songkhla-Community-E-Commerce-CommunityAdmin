@@ -203,11 +203,26 @@ export default defineComponent({
           title: item.name
         })
       })
+      this.option1 = this.removeDuplicatesByProperty(this.option1, "title")
       this.orders = this.defaultOrders
       this.orders.map((order: any) => {
         this.totalAll += order.order_details_price
       })
     },
+    removeDuplicatesByProperty(arr: any, property: any) {
+      const uniqueValues = new Set()
+      const result = []
+
+      for (const item of arr) {
+        if (!uniqueValues.has(item[property])) {
+          uniqueValues.add(item[property])
+          result.push(item)
+        }
+      }
+
+      return result
+    },
+
     selectedProduct(event: any) {
       let wordSelect = event.target.options[event.target.options.selectedIndex].text
       this.totalAll = 0
