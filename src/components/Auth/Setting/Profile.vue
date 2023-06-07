@@ -75,8 +75,8 @@ export default {
                     full_name: this.full_name,
                     password: this.password,
                 })
-                this.check_alert = "อัปเดตข้อมูลสำเร็จ"
-                alert("อัปเดตข้อมูลสำเร็จ")
+                this.check_alert = "แก้ไขข้อมูลสำเร็จ"
+                alert("แก้ไขข้อมูลสำเร็จ")
             } catch (error) {
                 console.log(error)
             }

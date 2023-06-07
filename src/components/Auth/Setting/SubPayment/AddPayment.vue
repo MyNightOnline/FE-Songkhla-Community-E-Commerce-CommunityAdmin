@@ -72,6 +72,7 @@ export default defineComponent({
                     account_name: this.account_name,
                 }
                 await axiosClient.post('/payment', postData)
+                alert('เพิ่มข้อมูลสำเร็จ')
                 this.$router.push('/setting/payment')
             } catch (error) {
                 console.error(error)

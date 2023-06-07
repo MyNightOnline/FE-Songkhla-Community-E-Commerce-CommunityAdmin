@@ -66,18 +66,16 @@ export default defineComponent({
             try {
                 const back_account = this.back_account
                 if (back_account.length != 10 || isNaN(Number(back_account))) return alert('โปรดกรอกหมายเลขบัญชีให้ถูกต้อง')
-                if (confirm('ยืนยันการแก้ไข ?')) {
-
-                    const data = JSON.parse(localStorage.getItem('user')!)
-                    const postData = {
-                        commu_id: data.commu_id,
-                        bank_name: this.bank_name,
-                        back_account: this.back_account,
-                        account_name: this.account_name,
-                    }
-                    await axiosClient.put(`/payment/${this.bank_id}`, postData)
-                    this.$router.push('/setting/payment')
+                const data = JSON.parse(localStorage.getItem('user')!)
+                const postData = {
+                    commu_id: data.commu_id,
+                    bank_name: this.bank_name,
+                    back_account: this.back_account,
+                    account_name: this.account_name,
                 }
+                await axiosClient.put(`/payment/${this.bank_id}`, postData)
+                alert('แก้ไขสำเร็จ')
+                this.$router.push('/setting/payment')
             } catch (error) {
                 console.error(error)
             }

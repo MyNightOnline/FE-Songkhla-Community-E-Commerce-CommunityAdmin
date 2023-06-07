@@ -204,6 +204,7 @@ export default {
             try {
                 await axiosClient.post('/products', formData)
                 alert('เพิ่มผลิตภัณฑ์สำเร็จ')
+                this.$router.push('/products')
             } catch (error: any) {
                 console.log(error)
                 alert(`เพิ่มผลิตภัณฑ์ไม่สำเร็จ\n Error: ${error}`)

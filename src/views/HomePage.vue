@@ -14,7 +14,18 @@
                     <span class="sr-only">Info</span>
                     <h3 class="text-2xl font-medium text-gray-800 dark:text-gray-300">ยินดีต้อนรับ {{ full_name }}</h3>
                 </div>
-                <div>
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl">
+                        สถานะ
+                        <span v-if="dataCommunity.confirm_status == 0"
+                            class="bg-gray-100 text-base text-gray-800 font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                            ยังไม่อนุมัติ
+                        </span>
+                        <span v-else-if="dataCommunity.confirm_status == 1"
+                            class="bg-green-100 text-green-800 text-base font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                            อนุมัติแล้ว
+                        </span>
+                    </h1>
                     <button @click="goSettingCommu()">
                         <svg fill="none" class="text-gray-600 w-8 h-8" stroke="currentColor" stroke-width="1.5"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

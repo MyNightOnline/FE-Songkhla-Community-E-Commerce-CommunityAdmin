@@ -1,10 +1,10 @@
 <template>
-    <div v-if="check_alert"
+    <!-- <div v-if="check_alert"
         class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
         <span class="font-medium">
             {{ check_alert }}
         </span>
-    </div>
+    </div> -->
     <h5 class="mb-6 text-xl font-semibold text-gray-900 dark:text-white">
         ข้อมูลกลุ่มวิสาหกิจชุมชน</h5>
     <form @submit.prevent="updatComunity">
@@ -130,7 +130,8 @@ export default defineComponent({
                     tam: this.selected_tam,
                 })
 
-                this.check_alert = "อัปเดตข้อมูลสำเร็จ"
+                this.check_alert = "แก้ไขข้อมูลสำเร็จ"
+                alert('แก้ไขข้อมูลสำเร็จ')
             } catch (error) {
                 console.log(error)
             }
