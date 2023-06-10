@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="({ order_id, full_name, total, date, order_status }, index) in orders" :key="index"
+                <tr v-for="({ order_id, full_name, total, date, order_status }, index) in paginatedOrders" :key="index"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -53,6 +53,19 @@
                 </tr>
             </tbody>
         </table>
+        <div class="flex justify-center my-8">
+            <button @click="previousPage" :disabled="currentPage === 1"
+                class="px-3 py-1 mr-2 text-lg rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300"
+                :class="{ 'cursor-not-allowed': currentPage === 1 }">
+                ก่อนหน้า
+            </button>
+            <span class="px-3 py-1 text-lg text-gray-600">{{ currentPage }}</span>
+            <button @click="nextPage" :disabled="currentPage === totalPages"
+                class="px-3 py-1 ml-2 text-lg rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300"
+                :class="{ 'cursor-not-allowed': currentPage === totalPages }">
+                หน้าถัดไป
+            </button>
+        </div>
     </div>
 </template>
 
@@ -78,7 +91,8 @@ export default defineComponent({
     ],
     data() {
         return {
-
+            currentPage: 1,
+            pageSize: 10
         }
     },
     methods: {
@@ -87,8 +101,33 @@ export default defineComponent({
             const formattedDate = formatter.format()
             return formattedDate
         },
+        goToPage(page: any) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page
+            }
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++
+            }
+        },
+        previousPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--
+            }
+        }
     },
     mounted() {
-    }
+    },
+    computed: {
+        paginatedOrders() {
+            const startIndex = (this.currentPage - 1) * this.pageSize
+            const endIndex = startIndex + this.pageSize
+            return this.orders.slice(startIndex, endIndex)
+        },
+        totalPages() {
+            return Math.ceil(this.orders.length / this.pageSize)
+        }
+    },
 })
 </script>

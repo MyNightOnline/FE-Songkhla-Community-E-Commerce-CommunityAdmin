@@ -208,6 +208,7 @@ export default defineComponent({
       this.orders.map((order: any) => {
         this.totalAll += order.order_details_price
       })
+      console.log(this.orders)
     },
     removeDuplicatesByProperty(arr: any, property: any) {
       const uniqueValues = new Set()
@@ -290,10 +291,24 @@ export default defineComponent({
 
         const dStart = (this.dateStart).toString()
         const dEnd = (this.dateEnd).toString()
-        // console.log(dStart)
-        // console.log(dEnd)
+
+        const datePartsdStart = dStart.split("/")
+        const daydStart = parseInt(datePartsdStart[0], 10)
+        const monthdStart = parseInt(datePartsdStart[1], 10) - 1
+        const yeardStart = parseInt(datePartsdStart[2], 10)
+        const datedStart = new Date(yeardStart, monthdStart, daydStart)
+
+        const datePartsdEnd = dEnd.split("/")
+        const daydEnd = parseInt(datePartsdEnd[0], 10)
+        const monthdEnd = parseInt(datePartsdEnd[1], 10) - 1
+        const yeardEnd = parseInt(datePartsdEnd[2], 10)
+        const datedStartdEnd = new Date(yeardEnd, monthdEnd, daydEnd)
+
+        console.log(dStart)
+        console.log(dEnd)
 
         if (dStart && dEnd == 'Invalid Date') {
+          console.log('in1')
           this.orders = this.orders.filter((order: any) => {
             if (order.date == dStart) {
               this.totalAll += order.order_details_price
@@ -301,6 +316,7 @@ export default defineComponent({
             }
           })
         } else if (dEnd && dStart == 'Invalid Date') {
+          console.log('in2')
           this.orders = this.orders.filter((order: any) => {
             if (order.date == dEnd) {
               this.totalAll += order.order_details_price
@@ -308,13 +324,27 @@ export default defineComponent({
             }
           })
         } else if (dStart && dEnd) {
-          this.orders = this.orders.filter((order: any) => {
-            if (order.date >= dStart && order.date <= dEnd) {
+          console.log('in3')
+          this.orders = this.orders.filter((order: any, index: any) => {
+            const orderDate = (order.date).toString()
+            const dateParts = orderDate.split("/")
+
+            const day = parseInt(dateParts[0], 10)
+            const month = parseInt(dateParts[1], 10) - 1 // Months in JavaScript are zero-based
+            const year = parseInt(dateParts[2], 10)
+
+            const date = new Date(year, month, day)
+
+            if (date >= datedStart && date <= datedStartdEnd) {
+
               this.totalAll += order.order_details_price
               return order
+
             }
+
           })
         } else {
+          console.log('in4')
           this.orders = this.defaultOrders
         }
       } else if (inputRadio2.checked) {

@@ -190,7 +190,14 @@ export default defineComponent({
             }
         },
         searchInput() {
-
+            let word = this.search
+            this.orderByUsersCommuId = this.defaultOrderByUsersCommuId.filter((val: any) => {
+                let result = (
+                    val.full_name.includes(word) ||
+                    val.order_id.toString().includes(word)
+                )
+                return result
+            })
         }
     },
     mounted() {

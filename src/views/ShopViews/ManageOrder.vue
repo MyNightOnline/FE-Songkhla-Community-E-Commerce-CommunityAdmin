@@ -111,6 +111,7 @@ export default {
             }
         })
         this.orders.shift()
+        console.log(this.orders)
     },
 
 }
